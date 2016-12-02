@@ -4,8 +4,8 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_ActionneurSimple
 VAR_INPUT
 	xInGoOut AT%I*:BOOL;				//input for going out
-	xInGoIn AT%I*:BOOL;				//input for going in
-	xReset AT%I*:BOOL;				//Reset all (go back to init state
+	xInGoIn AT%I*:BOOL;					//input for going in
+	xReset AT%I*:BOOL;					//Reset all (go back to init state
 	
 	xAutorizeOut AT%I* : BOOL;		//allowed to do the move requested with xInGoOut, If this is false Programm will threw an error
 	xAutorizeIn At%I* : BOOL;			//allowed to do the move requested with xInGoIn, If this is false Programm will threw an error
@@ -70,6 +70,9 @@ END_IF
 //Reset
 IF xReset THEN
 	fbEtape.piVal:=0;
+	stError.xState:=0;
+	xInOutPos:=0;
+	xInInPos:=0;
 END_IF
 
 //check pour vanne de blocage
@@ -100,6 +103,9 @@ CASE fbEtape.iNo OF
 			fbEtape.piSVal:=199;
 		END_IF
 	199:fbEtape.psMess:='In-Position reached';
+		IF NOT IxSensIn OR NOT stParam.xPresenceSensIn THEN
+			fbEtape.piVal:=150;
+		END_IF
 	//-----------------------------------------------
 	200:fbEtape.psMess:='Action go Out';
 		IF xAutorizeOut THEN
@@ -115,6 +121,9 @@ CASE fbEtape.iNo OF
 			fbEtape.piSVal:=299;
 		END_IF
 	299:fbEtape.psMess:='Out-Pos reached';
+		IF NOT IxSensoUT OR NOT stParam.xPresenceSensoUT THEN
+			fbEtape.piVal:=250;
+		END_IF
 	
 	999:fbEtape.psMess:='Erreur';
 END_CASE
@@ -159,8 +168,8 @@ xGoingOutNow:= QxOutOutput AND NOT IxSensOut;
 
 
 //Activation des sorties
-QxOutOutput:=fbEtape.iNo>200 AND fbEtape.iNo<299;
-QxInOutput:=fbEtape.iNo>100 AND fbEtape.iNo<199;]]></ST>
+QxOutOutput:=fbEtape.iNo>200 AND fbEtape.iNo<=299;
+QxInOutput:=fbEtape.iNo>100 AND fbEtape.iNo<=199;]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>

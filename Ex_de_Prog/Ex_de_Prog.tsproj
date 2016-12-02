@@ -301,30 +301,6 @@
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
-							<Name>GVL.stIO.stIn.IxAruIO</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL.stIO.stIn.xStartIO</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL.stIO.stIn.xStopIO</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL.stIO.stIn.xResetIO</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL.stIO.stIn.xAuto</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL.stIO.stIn.xManual</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
 							<Name>GVL.fbAct2.xInGoOut</Name>
 							<Comment>
 								<![CDATA[input for going out]]>
@@ -422,6 +398,30 @@
 							</Comment>
 							<Type>BOOL</Type>
 						</Var>
+						<Var>
+							<Name>GVL.stIO.stIn.IxAruIO</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.stIO.stIn.xStartIO</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.stIO.stIn.xStopIO</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.stIO.stIn.xResetIO</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.stIO.stIn.xAuto</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.stIO.stIn.xManual</Name>
+							<Type>BOOL</Type>
+						</Var>
 					</Vars>
 					<Vars VarGrpType="2">
 						<Name>PlcTask Outputs</Name>
@@ -458,18 +458,6 @@
 							<Comment>
 								<![CDATA[Vanne de blocace. Elle devient seulement 1 si l'autorisation entree/sortie est present]]>
 							</Comment>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL.stIO.stOut.QxLampeRouge</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL.stIO.stOut.QxLampeVerte</Name>
-							<Type>BOOL</Type>
-						</Var>
-						<Var>
-							<Name>GVL.stIO.stOut.QxLampeOrange</Name>
 							<Type>BOOL</Type>
 						</Var>
 						<Var>
@@ -540,6 +528,18 @@
 							<Comment>
 								<![CDATA[Vanne de blocace. Elle devient seulement 1 si l'autorisation entree/sortie est present]]>
 							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.stIO.stOut.QxLampeRouge</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.stIO.stOut.QxLampeVerte</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.stIO.stOut.QxLampeOrange</Name>
 							<Type>BOOL</Type>
 						</Var>
 					</Vars>

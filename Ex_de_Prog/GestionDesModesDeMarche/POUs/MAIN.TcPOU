@@ -7,17 +7,25 @@ VAR
 END_VAR
 ]]></Declaration>
     <Implementation>
-      <ST><![CDATA[fbAct1();
+      <ST><![CDATA[//appel cycliquement des FB
+fbAct1(); 
 fbAct2();
 fbAct3();
-
 fbMMA();
 
+//copie des entreees dans la struct dans le fbBouton.
+//Le fbBouton fais pour l'instant rien d'autre que de tenir les variables.
 fbBtn.xAru:=stio.stIn.IxAruIO;
 fbBtn.xReset:=stio.stIn.xResetIO;
 fbBtn.xStart:=stio.stIn.xStartIO;
 fbBtn.xStop:= NOT stio.stIn.xStopIO;
+//et ici on l'apelle
 fbBtn();
+
+//stParam
+stParam.stStatus.xErreur:= (fbAct2.stError.xState OR fbAct2.stError.xState OR fbAct2.stError.xState);
+
+//set les parametres dépendant de l'input
 IF stio.stIn.xAuto THEN
 	stparam.stStatus.eMMA:=Auto;
 ELSE IF stio.stIn.xManual THEN
@@ -27,21 +35,25 @@ ELSE IF stio.stIn.xManual THEN
 	END_IF
 END_IF
 
+//appel le mode auto et lui donne les parametres pour lui dire si ol peut démarrer, si il doit s'arreter ou faire un reset
 fbCycleAuto(
 	xStart:=fbMMA.iEtape=350 , 
 	xStop:= fbMMA.iEtape=390, 
 	xReset:= fbMMA.iEtape=810 OR fbMMA.iEtape=910, 
 	 );
-	 
-fbCycleInit();
+
+//fonction init sur les verins	 
+fbCycleInit(
+	xStart:=(fbMMA.iEtape=100 OR fbMMA.iEtape=340)
+	);
 
 //--------------------------
-//Actions
-//--------------------------
+//Actions de sortie
+
 //activation de la lampe 1
 stIo.stOut.QxLampeRouge:=fbCycleAuto.iEtape=110;
 
-//Actionneurs
+//Actionneurs autorize
 fbAct1.xAutorizeIn:=TRUE;
 fbAct1.xAutorizeOut:=TRUE;
 fbAct2.xAutorizeIn:=TRUE;
@@ -49,6 +61,8 @@ fbAct2.xAutorizeOut:=TRUE;
 fbAct3.xAutorizeIn:=TRUE;
 fbAct3.xAutorizeOut:=TRUE;
 
+
+//ici on sortira et rerentrera un verin apres l'autre
 fbAct1.xInGoOut:=fbCycleAuto.iEtape=120;
 fbAct2.xInGoOut:=fbCycleAuto.iEtape=121;
 fbAct3.xInGoOut:=fbCycleAuto.iEtape=122;
@@ -61,11 +75,15 @@ fbAct1.xInGoIn:=fbCycleAuto.iEtape=132 OR fbCycleInit.iEtape=100;
 stIO.stOut.QxLampeOrange:=(fbCycleAuto.iEtape=120 OR fbCycleAuto.iEtape=121 OR fbCycleAuto.iEtape=122 OR fbCycleInit.xBusy);
 stIO.stOut.QxLampeVerte:=(fbCycleAuto.iEtape=130 OR fbCycleAuto.iEtape=131 OR fbCycleAuto.iEtape=132 OR fbCycleInit.xBusy);
 
-
-
-fbAct1( );
-fbAct2( );
-fbAct3( );]]></ST>
+//Reset des Actionneurs avan le init
+IF(fbCycleInit.iEtape=99) THEN
+	fbAct1.xReset:=1;
+	fbAct2.xReset:=1;
+	fbAct3.xReset:=1;
+END_IF
+fbAct1.xReset:=fbCycleInit.iEtape=99;
+fbAct2.xReset:=fbCycleInit.iEtape=99;
+fbAct3.xReset:=fbCycleInit.iEtape=99;]]></ST>
     </Implementation>
   </POU>
 </TcPlcObject>
