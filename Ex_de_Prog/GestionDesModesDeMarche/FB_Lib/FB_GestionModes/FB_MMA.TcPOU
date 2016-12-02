@@ -15,9 +15,9 @@ END_VAR
     <Implementation>
       <ST><![CDATA[fbEtape.mActualisation(FALSE,FALSE);
 
-//on active l'arret d'urgence
+//on active l'arret d'urgence si l'entree devient false
 IF NOT fbBtn.xAru AND fbEtape.iNo>10 AND fbEtape.iNo<800 THEN
-	fbEtape.piVal:=900;
+	fbEtape.piVal:=900; 
 END_IF
 
 //on fait un reset
@@ -31,7 +31,7 @@ CASE fbEtape.iNo OF
 		fbEtape.piVal:=10;
 	
 	10://OB100 Siemens
-		p_InitVar();
+		p_InitVar(); //initialiser les vars (propre a la machine)
 		fbEtape.piVal:=50;
 	
 	50:fbEtape.psMess:='sélection du mode MMA';
@@ -75,6 +75,7 @@ CASE fbEtape.iNo OF
 		IF (NOT fbCycleAuto.xBusy) THEN
 			fbEtape.piVal:=50;
 		END_IF
+		
 	//--------------------------------------------------------------
 	//Reset
 	//--------------------------------------------------------------
@@ -84,6 +85,7 @@ CASE fbEtape.iNo OF
 		fbEtape.piVal:=899;
 	899:fbEtape.psMess:='Fin de procédure Reset';
 		fbEtape.piVal:=50;
+		
 	//--------------------------------------------------------------
 	//ARU
 	//--------------------------------------------------------------

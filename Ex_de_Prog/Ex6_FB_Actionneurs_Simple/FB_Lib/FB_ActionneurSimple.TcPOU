@@ -3,31 +3,28 @@
   <POU Name="FB_ActionneurSimple" Id="{6a6c25b6-7999-4ab0-ab52-cdeaa2487345}" SpecialFunc="None">
     <Declaration><![CDATA[FUNCTION_BLOCK FB_ActionneurSimple
 VAR_INPUT
-	xInGoOut AT%I*:BOOL;				//input for going out
+	xInGoOut AT%I*:BOOL;			//input for going out
 	xInGoIn AT%I*:BOOL;				//input for going in
-	xReset AT%I*:BOOL;				//Reset all (go back to init state
+	xReset AT%I*:BOOL;				//Reset all (go back to init state)
 	
-	xAutorizeOut AT%I* : BOOL;		//allowed to do the move requested with xInGoOut, If this is false Programm will threw an error
-	xAutorizeIn At%I* : BOOL;			//allowed to do the move requested with xInGoIn, If this is false Programm will threw an error
+	xAutorizeOut AT%I* : BOOL;		//true = allowed to do the move requested with xInGoOut, If this is false Programm will threw an error
+	xAutorizeIn AT%I* : BOOL;		//true = allowed to do the move requested with xInGoIn, If this is false Programm will threw an error
 	
-	stParam:ST_ParamActionneur;	//Param for actuator 
+	IxSensOut AT%I*:BOOL;			//Sensor for the reached In-Pos
+	IxSensIn AT%I*:BOOL;			//Sensor for the reached Out-Pos
+
 END_VAR
 VAR_OUTPUT
-	xInOutPos:BOOL;
-	xInInPos:BOOL;
+	xInOutPos:BOOL;					//indicator that the actuator is in Out-Position
+	xInInPos:BOOL;					//indicator that the actuator is in In-Position
 	
-	xGoingOutNow AT%Q*:BOOL; //indication that actor is going in Out-Pos
-	xGoingInNow AT%Q*:BOOL; //indication that actor is going in In-Pos
+	xGoingOutNow AT%Q*:BOOL; 		//indication that actor is currently going in Out-Pos
+	xGoingInNow AT%Q*:BOOL; 		//indication that actor is currently going in In-Pos
 	
-	QxOutOutput AT%Q*:BOOL;//Output to actuator for going Out
-	QxInOutput AT%Q*:BOOL;//Output to actuator for going In
+	QxOutOutput AT%Q*:BOOL;			//Output to actuator for going Out
+	QxInOutput AT%Q*:BOOL;			//Output to actuator for going In
 	
-	IxSensOut AT%I*:BOOL;	//Sensor for the reached In-Pos
-	IxSensIn AT%I*:BOOL;//Sensor for the reached Out-Pos
-		
-	stError:ST_Erreur;//Error Struct
-	
-	QxVanneDeBloquage AT%Q* : BOOL; //Vanne de blocace. Elle devient seulement 1 si l'autorisation entree/sortie est present
+	QxVanneDeBloquage AT%Q* : BOOL; //Autorisation valve. is only true,when one of the Autorisations is true.
 END_VAR
 VAR
 	fbEtape:FB_Etape;
@@ -35,23 +32,23 @@ VAR
 	fbRTrigOut:R_Trig;
 	fbRTrigIn:R_Trig;
 		
-	
-
+	stParam:ST_ParamActionneur;		//Param for actuator 
+	stError:ST_Erreur;				//Error Struct for actuator	
 END_VAR
 ]]></Declaration>
     <Implementation>
       <ST><![CDATA[fbEtape.mActualisation(xModeStepForStep,xNextStep);
 
-//check rising edges on 
+//check rising edges on the Inputs
 fbRTrigOut(clk:=xInGoOut);
 fbRTrigIn(clk:=xInGoIn);
 
 //Go to the next step when there is an Out-Command
 IF fbRTrigOut.Q AND NOT(fbEtape.iNo>=200 AND fbEtape.iNo<=299) THEN	//When rising-edge was detected
 	IF xAutorizeOut THEN
-		fbEtape.piVal:=200;
+		fbEtape.piVal:=200; //go to next step
 	ELSE
-		stError.iId:=10;
+		stError.iId:=10;	//error - no autorisation
 		stError.sMessage:='Autorisation refusee pour action sortir verin';
 	END_IF		
 fbEtape.piVal:=200;	
@@ -60,32 +57,32 @@ END_IF
 //Go to the next step when there is an In-Command
 IF fbRTrigIn.Q AND NOT(fbEtape.iNo>=100 AND fbEtape.iNo<=199) THEN	//When rising-edge was detected and not already going In
 	IF xAutorizeIn THEN
-		fbEtape.piVal:=100;
+		fbEtape.piVal:=100;	//go to the next step
 	ELSE
-		stError.iId:=11;
+		stError.iId:=11;	//error - no autorisation
 		stError.sMessage:='Autorisation refusee pour action rentrer verin';
 	END_IF	
 END_IF
 
-//Reset
+//Reset to the initial state
 IF xReset THEN
 	fbEtape.piVal:=0;
 END_IF
 
-//check pour vanne de blocage
+//checks if security valve can be debloced
 QxVanneDeBloquage:= (xAutorizeOut OR xAutorizeIn);
 
-//Reset de l'erreur
+//Reset the actual error
 IF stError.xState THEN
 	stError.iId:=0;
 	stError.sMessage:='';
 END_IF
 
-
-
+//main Programm for the fb_Etape
 CASE fbEtape.iNo OF
 	0:fbEtape.psMess:='Wait for an In or Out command';
 	//-----------------------------------------------
+	//Going in
 	100:fbEtape.psMess:='Action go In';
 		IF xAutorizeIn THEN
 			fbEtape.piVal:=110;
@@ -101,6 +98,7 @@ CASE fbEtape.iNo OF
 		END_IF
 	199:fbEtape.psMess:='In-Position reached';
 	//-----------------------------------------------
+	//Going out
 	200:fbEtape.psMess:='Action go Out';
 		IF xAutorizeOut THEN
 			fbEtape.piVal:=210;
@@ -115,11 +113,12 @@ CASE fbEtape.iNo OF
 			fbEtape.piSVal:=299;
 		END_IF
 	299:fbEtape.psMess:='Out-Pos reached';
-	
+	//-----------------------------------------------
+	//Error
 	999:fbEtape.psMess:='Erreur';
 END_CASE
 
-//Activation du Timer
+//Activation Timer
 fbTimeOut(IN:=(fbEtape.iNo>100 AND fbEtape.iNo<199 OR fbEtape.iNo>200 AND fbEtape.iNo<299)
 				AND (NOT fbRTrigIn.Q AND NOT fbRTrigOut.Q),PT:=stParam.tTimeOut);	
 

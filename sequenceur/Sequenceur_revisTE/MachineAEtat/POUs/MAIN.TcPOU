@@ -1,0 +1,90 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="MAIN" Id="{54fc3a77-8625-4a7d-b9ab-fcdc9864b384}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	fbEtape:FB_Etape;		//step
+	
+END_VAR
+VAR_OUTPUT
+	QxLampe1 :BOOL;
+	QxLampe2 :BOOL;
+	QxLampe3 :BOOL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[(*actualisation des informations de l'objet de gestion des étapes
+var 1 :gestion du blocage pour mode pas à pas
+Var 2 :activation prochain pas*)
+fbEtape.mActualisation(xModePasAPas,xNextPas);
+
+CASE fbEtape.iNo OF
+	//start etape
+	0:	fbEtape.piVal:=100;
+	
+	100:fbEtape.psMess:='fonction allume lampe1';
+		//assigne le temps de comptage
+		fbEtape.tTimeQ:=T#1S;
+		fbEtape.piVal:=110;
+		
+	110:fbEtape.psMess:='fonction allume lampe1';
+		IF fbEtape.xTimeQ THEN
+			fbEtape.piSVal:=200;
+		END_IF
+		
+	200:fbEtape.psMess:='fonction allume lampe2';
+		//assigne le nouveaux temps de comptage
+		fbEtape.tTimeQ:=T#1S;
+		fbEtape.piVal:=210;
+		
+	210:fbEtape.psMess:='fonction allume lampe2';
+		IF fbEtape.xTimeQ THEN
+			fbEtape.piSVal:=300;
+		END_IF
+		
+	300:fbEtape.psMess:='fonction allume lampe3 et off lampe1';
+		//assigne le nouveaux temps de comptage
+		fbEtape.tTimeQ:=T#1S;
+		fbEtape.piVal:=310;
+		
+	310:fbEtape.psMess:='fonction allume lampe3 et off lampe1';
+		IF fbEtape.xTimeQ THEN
+			fbEtape.piSVal:=400;
+		END_IF
+		
+	400:fbEtape.psMess:='fonction off lampe2';
+		//assigne le nouveaux temps de comptage
+		fbEtape.tTimeQ:=T#1S;
+		fbEtape.piVal:=410;
+		
+	410:fbEtape.psMess:='fonction off lampe2';
+		IF fbEtape.xTimeQ THEN
+			fbEtape.piSVal:=500;
+		END_IF
+		
+	500:fbEtape.psMess:='fonction lampe 3 off';
+		//assigne le nouveaux temps de comptage
+		fbEtape.tTimeQ:=T#2S;
+		fbEtape.piVal:=510;
+		
+	510:fbEtape.psMess:='fonction lampe 3 off';
+		IF fbEtape.xTimeQ THEN
+			fbEtape.piSVal:=100;
+		END_IF
+END_CASE
+
+//--------------------------
+//Actions
+//--------------------------
+
+//activation de la lampe 1
+QxLampe1:=(fbEtape.iNo=110 OR fbEtape.iNo=200 OR fbEtape.iNo=210);
+
+//activation de la lampe 2
+QxLampe2:=(fbEtape.iNo=210 OR fbEtape.iNo=300 OR fbEtape.iNo=310 );
+
+//activation de la lampe 3
+QxLampe3:=(fbEtape.iNo=310 OR fbEtape.iNo=400 OR fbEtape.iNo=410) ;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>
