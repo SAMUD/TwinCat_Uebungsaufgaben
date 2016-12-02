@@ -1,0 +1,71 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="MAIN" Id="{8de8e177-59d6-4bde-aa62-dce67db5e262}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbAct1();
+fbAct2();
+fbAct3();
+
+fbMMA();
+
+fbBtn.xAru:=stio.stIn.IxAruIO;
+fbBtn.xReset:=stio.stIn.xResetIO;
+fbBtn.xStart:=stio.stIn.xStartIO;
+fbBtn.xStop:= NOT stio.stIn.xStopIO;
+fbBtn();
+IF stio.stIn.xAuto THEN
+	stparam.stStatus.eMMA:=Auto;
+ELSE IF stio.stIn.xManual THEN
+	stparam.stStatus.eMMA:=Man;
+	ELSE
+		stparam.stStatus.eMMA:=Init;
+	END_IF
+END_IF
+
+fbCycleAuto(
+	xStart:=fbMMA.iEtape=350 , 
+	xStop:= fbMMA.iEtape=390, 
+	xReset:= fbMMA.iEtape=810 OR fbMMA.iEtape=910, 
+	 );
+	 
+fbCycleInit();
+
+//--------------------------
+//Actions
+//--------------------------
+//activation de la lampe 1
+stIo.stOut.QxLampeRouge:=fbCycleAuto.iEtape=110;
+
+//Actionneurs
+fbAct1.xAutorizeIn:=TRUE;
+fbAct1.xAutorizeOut:=TRUE;
+fbAct2.xAutorizeIn:=TRUE;
+fbAct2.xAutorizeOut:=TRUE;
+fbAct3.xAutorizeIn:=TRUE;
+fbAct3.xAutorizeOut:=TRUE;
+
+fbAct1.xInGoOut:=fbCycleAuto.iEtape=120;
+fbAct2.xInGoOut:=fbCycleAuto.iEtape=121;
+fbAct3.xInGoOut:=fbCycleAuto.iEtape=122;
+
+fbAct3.xInGoIn:=fbCycleAuto.iEtape=130 OR fbCycleInit.iEtape=100;
+fbAct2.xInGoIn:=fbCycleAuto.iEtape=131 OR fbCycleInit.iEtape=100;
+fbAct1.xInGoIn:=fbCycleAuto.iEtape=132 OR fbCycleInit.iEtape=100;
+
+//Lampe out
+stIO.stOut.QxLampeOrange:=(fbCycleAuto.iEtape=120 OR fbCycleAuto.iEtape=121 OR fbCycleAuto.iEtape=122 OR fbCycleInit.xBusy);
+stIO.stOut.QxLampeVerte:=(fbCycleAuto.iEtape=130 OR fbCycleAuto.iEtape=131 OR fbCycleAuto.iEtape=132 OR fbCycleInit.xBusy);
+
+
+
+fbAct1( );
+fbAct2( );
+fbAct3( );]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

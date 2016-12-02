@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="MAIN" Id="{bc23ed29-a0d3-44c0-9898-2f5e03cb9c88}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	MrAnglef: REAL;
+	MrHypotenusef: REAL;
+	MrResultat: REAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[MrResultat:=f_calcul(MrAnglef,MrHypotenusef);
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

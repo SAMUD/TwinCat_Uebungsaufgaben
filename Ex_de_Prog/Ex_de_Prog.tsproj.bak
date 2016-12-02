@@ -1,0 +1,1277 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<TcSmProject xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://www.beckhoff.com/schemas/2012/07/TcSmProject" TcSmVersion="1.0" TcVersion="3.1.4020.14">
+	<DataTypes>
+		<DataType>
+			<Name GUID="{85DC3E7A-8ADA-435B-9479-25573909A7DB}" Namespace="AX5000" TcBaseType="true">E_AX5000_P_0275_ActiveFeedbackAndMemory</Name>
+			<BitSize>8</BitSize>
+			<BaseType GUID="{18071995-0000-0000-0000-000000000001}">BYTE</BaseType>
+			<EnumInfo>
+				<Text>
+					<![CDATA[EAX5000_P_0275_MEMORY_NONE]]>
+				</Text>
+				<Enum>0</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[EAX5000_P_0275_FEEDBACK1_MEMORY_ENCODER]]>
+				</Text>
+				<Enum>1</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[EAX5000_P_0275_FEEDBACK1_MEMORY_DRIVE]]>
+				</Text>
+				<Enum>2</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[EAX5000_P_0275_FEEDBACK2_MEMORY_ENCODER]]>
+				</Text>
+				<Enum>8</Enum>
+			</EnumInfo>
+			<EnumInfo>
+				<Text>
+					<![CDATA[EAX5000_P_0275_FEEDBACK2_MEMORY_DRIVE]]>
+				</Text>
+				<Enum>16</Enum>
+			</EnumInfo>
+			<Hides>
+				<Hide GUID="{F1A82E04-2D76-4E5D-BB15-437337214D25}"/>
+			</Hides>
+		</DataType>
+		<DataType>
+			<Name GUID="{D7D16A25-71D5-48E0-882D-56AB4D826BC2}" Namespace="AX5000" PersistentType="true">ST_AX5000_P_0275</Name>
+			<BitSize>16</BitSize>
+			<SubItem>
+				<Name>ActiveFeedbackAndMemory</Name>
+				<Type GUID="{85DC3E7A-8ADA-435B-9479-25573909A7DB}" Namespace="AX5000">E_AX5000_P_0275_ActiveFeedbackAndMemory</Type>
+				<BitSize>8</BitSize>
+				<BitOffs>0</BitOffs>
+			</SubItem>
+			<SubItem>
+				<Name>InitializationErrorBehavior</Name>
+				<Type GUID="{18071995-0000-0000-0000-000000000010}">BIT</Type>
+				<BitSize>1</BitSize>
+				<BitOffs>8</BitOffs>
+			</SubItem>
+			<Hides>
+				<Hide GUID="{0D1A14D3-018F-4F48-88A7-90B490A317B5}"/>
+				<Hide GUID="{43B3CFF1-FA94-4CC1-8B03-C73EF940373B}"/>
+				<Hide GUID="{81B09CD0-943C-4070-AA5B-0A6818251CEB}"/>
+				<Hide GUID="{B6598B95-DC2C-454C-9B12-DE628B32D897}"/>
+			</Hides>
+		</DataType>
+	</DataTypes>
+	<ImageDatas>
+		<ImageData Id="1000">424de6000000000000007600000028000000100000000e000000010004000000000070000000c40e0000c40e0000100000001000000000000000ff0000000084000084848400c6c6c6000000ff00ff00ff0000ffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff0066333333333336666644444340403666664004434747366666405443444436666640044340403666664004434141366666400453444436666640042340403666664444444545366600044544444436660644454440403666004555554444366606444544424236660004454444443666</ImageData>
+	</ImageDatas>
+	<Project ProjectGUID="{6FC86F7E-5057-4B64-9C35-B454039DE676}" TargetNetId="157.26.1.24.1.6" Target64Bit="true" ShowHideConfigurations="#x6">
+		<System>
+			<Settings MaxCpus="4">
+				<Cpu LatencyWarning="1000"/>
+				<Cpu CpuId="1" LatencyWarning="1000"/>
+				<Cpu CpuId="2" LatencyWarning="1000"/>
+			</Settings>
+			<Tasks>
+				<Task Id="2" Priority="20" CycleTime="10000" AmsPort="350">
+					<Name>PlcTask</Name>
+				</Task>
+			</Tasks>
+		</System>
+		<Plc>
+			<Project Disabled="true" GUID="{732F0E61-39E9-4ED5-8141-6ADA36E9D8E4}" Name="1Calcul" PrjFilePath="1Calcul\1Calcul.plcproj" TmcFilePath="1Calcul\1Calcul.tmc" ReloadTmc="true" AmsPort="851" FileArchiveSettings="#x000e">
+				<Instance Id="#x01010010" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+					<Name>1Calcul Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<TaskPouOids>
+						<TaskPouOid Prio="20" OTCID="#x01010011"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+			<Project Disabled="true" GUID="{0312CF3D-D709-46C8-A3A2-4953EB28E261}" Name="2.4_Timer_TON" PrjFilePath="2.4_Timer_TON\2.4_Timer_TON.plcproj" TmcFilePath="2.4_Timer_TON\2.4_Timer_TON.tmc" ReloadTmc="true" AmsPort="852" FileArchiveSettings="#x000e">
+				<Instance Id="#x01010020" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+					<Name>2 Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<TaskPouOids>
+						<TaskPouOid Prio="20" OTCID="#x01010021"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+			<Project Disabled="true" GUID="{752FA649-76DF-452D-8454-E0BF6152F917}" Name="4_sequence_automatique" PrjFilePath="4_sequence_automatique\4_sequence_automatique.plcproj" TmcFilePath="4_sequence_automatique\4_sequence_automatique.tmc" ReloadTmc="true" AmsPort="853" FileArchiveSettings="#x000e">
+				<Instance Id="#x01010030" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+					<Name>4_sequence_automatique Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<TaskPouOids>
+						<TaskPouOid Prio="20" OTCID="#x01010031"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+			<Project Disabled="true" GUID="{3F8C85E1-7AB5-4F58-A16F-754B154F6A68}" Name="4_2_seq_autom_temporisee" PrjFilePath="4_2_seq_autom_temporisee\4_2_seq_autom_temporisee.plcproj" TmcFilePath="4_2_seq_autom_temporisee\4_2_seq_autom_temporisee.tmc" ReloadTmc="true" AmsPort="854" FileArchiveSettings="#x000e">
+				<Instance Id="#x01010040" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+					<Name>4_2_seq_autom_temporisee Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Vars VarGrpType="2">
+						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>bla.QxLED1</Name>
+							<Comment>
+								<![CDATA[actionner le verin | avec AT %Q si lien physique]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>bla.QxLED2</Name>
+							<Comment>
+								<![CDATA[actionner le verin | avec AT %Q si lien physique]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>bla.QxLED3</Name>
+							<Comment>
+								<![CDATA[actionner le verin | avec AT %Q si lien physique]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>bla.QxLED4</Name>
+							<Comment>
+								<![CDATA[actionner le verin | avec AT %Q si lien physique]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+					</Vars>
+					<TaskPouOids>
+						<TaskPouOid Prio="20" OTCID="#x01010041"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+			<Project Disabled="true" GUID="{EAD76788-C1C3-429A-9293-267A11FD1E4C}" Name="Ex6_FB_Actionneurs_Simple" PrjFilePath="Ex6_FB_Actionneurs_Simple\Ex6_FB_Actionneurs_Simple.plcproj" TmcFilePath="Ex6_FB_Actionneurs_Simple\Ex6_FB_Actionneurs_Simple.tmc" ReloadTmc="true" AmsPort="855" FileArchiveSettings="#x000e">
+				<Instance Id="#x01010050" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+					<Name>Ex6_FB_Actionneurs_Simple Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Vars VarGrpType="1">
+						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>GVL.fbAct1.xInGoOut</Name>
+							<Comment>
+								<![CDATA[input for going out]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.xInGoIn</Name>
+							<Comment>
+								<![CDATA[input for going in]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.xReset</Name>
+							<Comment>
+								<![CDATA[Reset all (go back to init state]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.xAutorizeOut</Name>
+							<Comment>
+								<![CDATA[allowed to do the move requested with xInGoOut, If this is false Programm will threw an error]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.xAutorizeIn</Name>
+							<Comment>
+								<![CDATA[allowed to do the move requested with xInGoIn, If this is false Programm will threw an error]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.IxSensOut</Name>
+							<Comment>
+								<![CDATA[Sensor for the reached In-Pos]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.IxSensIn</Name>
+							<Comment>
+								<![CDATA[Sensor for the reached Out-Pos]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="2">
+						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>GVL.fbAct1.xGoingOutNow</Name>
+							<Comment>
+								<![CDATA[indication that actor is going in Out-Pos]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.xGoingInNow</Name>
+							<Comment>
+								<![CDATA[indication that actor is going in In-Pos]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.QxOutOutput</Name>
+							<Comment>
+								<![CDATA[Output to actuator for going Out]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.QxInOutput</Name>
+							<Comment>
+								<![CDATA[Output to actuator for going In]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.QxVanneDeBloquage</Name>
+							<Comment>
+								<![CDATA[Vanne de blocace. Elle devient seulement 1 si l'autorisation entree/sortie est present]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+					</Vars>
+					<TaskPouOids>
+						<TaskPouOid Prio="20" OTCID="#x01010051"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+			<Project GUID="{6CA7F5C2-0E9E-4085-B815-A5E683635463}" Name="GestionDesModesDeMarche" PrjFilePath="GestionDesModesDeMarche\GestionDesModesDeMarche.plcproj" TmcFilePath="GestionDesModesDeMarche\GestionDesModesDeMarche.tmc" ReloadTmc="true" AmsPort="856" FileArchiveSettings="#x000e">
+				<Instance Id="#x01010060" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+					<Name>GestionDesModesDeMarche Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Vars VarGrpType="1">
+						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>GVL.fbAct1.xInGoOut</Name>
+							<Comment>
+								<![CDATA[input for going out]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.xInGoIn</Name>
+							<Comment>
+								<![CDATA[input for going in]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.xReset</Name>
+							<Comment>
+								<![CDATA[Reset all (go back to init state]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.xAutorizeOut</Name>
+							<Comment>
+								<![CDATA[allowed to do the move requested with xInGoOut, If this is false Programm will threw an error]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.xAutorizeIn</Name>
+							<Comment>
+								<![CDATA[allowed to do the move requested with xInGoIn, If this is false Programm will threw an error]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.IxSensOut</Name>
+							<Comment>
+								<![CDATA[Sensor for the reached In-Pos]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.IxSensIn</Name>
+							<Comment>
+								<![CDATA[Sensor for the reached Out-Pos]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.stIO.stIn.IxAruIO</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.stIO.stIn.xStartIO</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.stIO.stIn.xStopIO</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.stIO.stIn.xResetIO</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct2.xInGoOut</Name>
+							<Comment>
+								<![CDATA[input for going out]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct2.xInGoIn</Name>
+							<Comment>
+								<![CDATA[input for going in]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct2.xReset</Name>
+							<Comment>
+								<![CDATA[Reset all (go back to init state]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct2.xAutorizeOut</Name>
+							<Comment>
+								<![CDATA[allowed to do the move requested with xInGoOut, If this is false Programm will threw an error]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct2.xAutorizeIn</Name>
+							<Comment>
+								<![CDATA[allowed to do the move requested with xInGoIn, If this is false Programm will threw an error]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct2.IxSensOut</Name>
+							<Comment>
+								<![CDATA[Sensor for the reached In-Pos]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct2.IxSensIn</Name>
+							<Comment>
+								<![CDATA[Sensor for the reached Out-Pos]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct3.xInGoOut</Name>
+							<Comment>
+								<![CDATA[input for going out]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct3.xInGoIn</Name>
+							<Comment>
+								<![CDATA[input for going in]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct3.xReset</Name>
+							<Comment>
+								<![CDATA[Reset all (go back to init state]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct3.xAutorizeOut</Name>
+							<Comment>
+								<![CDATA[allowed to do the move requested with xInGoOut, If this is false Programm will threw an error]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct3.xAutorizeIn</Name>
+							<Comment>
+								<![CDATA[allowed to do the move requested with xInGoIn, If this is false Programm will threw an error]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct3.IxSensOut</Name>
+							<Comment>
+								<![CDATA[Sensor for the reached In-Pos]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct3.IxSensIn</Name>
+							<Comment>
+								<![CDATA[Sensor for the reached Out-Pos]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="2">
+						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>GVL.fbAct1.xGoingInNow</Name>
+							<Comment>
+								<![CDATA[indication that actor is going in In-Pos]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.QxOutOutput</Name>
+							<Comment>
+								<![CDATA[Output to actuator for going Out]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.xGoingOutNow</Name>
+							<Comment>
+								<![CDATA[indication that actor is going in Out-Pos]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.QxInOutput</Name>
+							<Comment>
+								<![CDATA[Output to actuator for going In]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct1.QxVanneDeBloquage</Name>
+							<Comment>
+								<![CDATA[Vanne de blocace. Elle devient seulement 1 si l'autorisation entree/sortie est present]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.stIO.stOut.QxLampeRouge</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.stIO.stOut.QxLampeVerte</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.stIO.stOut.QxLampeOrange</Name>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct2.xGoingOutNow</Name>
+							<Comment>
+								<![CDATA[indication that actor is going in Out-Pos]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct2.xGoingInNow</Name>
+							<Comment>
+								<![CDATA[indication that actor is going in In-Pos]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct2.QxOutOutput</Name>
+							<Comment>
+								<![CDATA[Output to actuator for going Out]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct2.QxInOutput</Name>
+							<Comment>
+								<![CDATA[Output to actuator for going In]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct2.QxVanneDeBloquage</Name>
+							<Comment>
+								<![CDATA[Vanne de blocace. Elle devient seulement 1 si l'autorisation entree/sortie est present]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct3.xGoingOutNow</Name>
+							<Comment>
+								<![CDATA[indication that actor is going in Out-Pos]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct3.xGoingInNow</Name>
+							<Comment>
+								<![CDATA[indication that actor is going in In-Pos]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct3.QxOutOutput</Name>
+							<Comment>
+								<![CDATA[Output to actuator for going Out]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct3.QxInOutput</Name>
+							<Comment>
+								<![CDATA[Output to actuator for going In]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+						<Var>
+							<Name>GVL.fbAct3.QxVanneDeBloquage</Name>
+							<Comment>
+								<![CDATA[Vanne de blocace. Elle devient seulement 1 si l'autorisation entree/sortie est present]]>
+							</Comment>
+							<Type>BOOL</Type>
+						</Var>
+					</Vars>
+					<TaskPouOids>
+						<TaskPouOid Prio="20" OTCID="#x01010061"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+		</Plc>
+		<Io>
+			<Device DevType="111" DevFlags="#x0003" AmsPort="28674" Id="2">
+				<Name>Gerät 2 (EtherCAT)</Name>
+				<AddressInfo>
+					<Pnp>
+						<DeviceDesc>Connexion au réseau local 2 (TwinCAT-Intel PCI Ethe</DeviceDesc>
+						<DeviceName>\DEVICE\{C642143D-D94A-4F14-9F65-1BA9F98C0362}</DeviceName>
+						<DeviceData>6805ca3cf539</DeviceData>
+					</Pnp>
+				</AddressInfo>
+				<Image Id="1" AddrType="9" ImageType="3">
+					<Name>Prozessabbild</Name>
+				</Image>
+				<Box BoxType="9081" AmsPort="28928" Id="1">
+					<Name>Box 1 (BK1150)</Name>
+					<ImageId>1000</ImageId>
+					<Vars VarGrpType="1">
+						<Name>Eingänge</Name>
+						<Var>
+							<Name>CouplerState</Name>
+							<Comment>
+								<![CDATA[0x0000 = No error
+0x0001 = K-Bus error
+0x0002 = Configuration error
+0x0010 = Outputs disabled
+0x0020 = K-Bus overrun
+0x0040 = Communication error (Inputs)
+0x0080 = Communication error (Outputs)
+]]>
+							</Comment>
+							<Type>UINT</Type>
+							<BitOffs>312</BitOffs>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="2">
+						<Name>Ausgänge</Name>
+						<Var>
+							<Name>CouplerCtrl</Name>
+							<Comment>
+								<![CDATA[0x0010 = Disable outputs
+0x0020 = Show K-Bus overrun
+]]>
+							</Comment>
+							<Type>UINT</Type>
+							<BitOffs>312</BitOffs>
+						</Var>
+					</Vars>
+					<BusCoupler ComplexTermSupport="true" NewHardware="true">
+						<Flags SupportVirtualTerms="true"/>
+						<Term Id="2" TermType="#x9e3" Fieldbus="7">
+							<Name>Klemme 2 (KL2531)</Name>
+							<ImageId>31</ImageId>
+							<Vars VarGrpType="3">
+								<Name>Kanal 1</Name>
+								<Var>
+									<Name>Status</Name>
+									<Type>USINT</Type>
+									<BitOffs>328</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var>
+									<Name>Position</Name>
+									<Type>UINT</Type>
+									<BitOffs>344</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var>
+									<Name>ExtStatus</Name>
+									<Type>UINT</Type>
+									<BitOffs>360</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var>
+									<Name>Ctrl</Name>
+									<Type>USINT</Type>
+									<BitOffs>328</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+								<Var>
+									<Name>Velocity</Name>
+									<Type>INT</Type>
+									<BitOffs>344</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+								<Var>
+									<Name>ExtCtrl</Name>
+									<Type>UINT</Type>
+									<BitOffs>360</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+						</Term>
+						<Term Id="3" TermType="#x9f8" Fieldbus="7">
+							<Name>Klemme 3 (KL2552)</Name>
+							<ImageId>31</ImageId>
+							<Vars VarGrpType="3">
+								<Name>Kanal 1</Name>
+								<Var>
+									<Name>Status</Name>
+									<Type>USINT</Type>
+									<BitOffs>376</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Ein</Name>
+									<Type>INT</Type>
+									<BitOffs>392</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var>
+									<Name>Kontrolle</Name>
+									<Type>USINT</Type>
+									<BitOffs>376</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Aus</Name>
+									<Type>INT</Type>
+									<BitOffs>392</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 2</Name>
+								<Var>
+									<Name>Status</Name>
+									<Type>USINT</Type>
+									<BitOffs>408</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Ein</Name>
+									<Type>INT</Type>
+									<BitOffs>424</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var>
+									<Name>Kontrolle</Name>
+									<Type>USINT</Type>
+									<BitOffs>408</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Aus</Name>
+									<Type>INT</Type>
+									<BitOffs>424</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+						</Term>
+						<Term Id="4" TermType="#xd4c" Fieldbus="7">
+							<Name>Klemme 4 (KL3404)</Name>
+							<ImageId>33</ImageId>
+							<Vars VarGrpType="3">
+								<Name>Kanal 1</Name>
+								<Var>
+									<Name>Status</Name>
+									<Type>USINT</Type>
+									<BitOffs>440</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Ein</Name>
+									<Type>INT</Type>
+									<BitOffs>456</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var>
+									<Name>Kontrolle</Name>
+									<Type>USINT</Type>
+									<BitOffs>440</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Aus</Name>
+									<Type>INT</Type>
+									<BitOffs>456</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 2</Name>
+								<Var>
+									<Name>Status</Name>
+									<Type>USINT</Type>
+									<BitOffs>472</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Ein</Name>
+									<Type>INT</Type>
+									<BitOffs>488</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var>
+									<Name>Kontrolle</Name>
+									<Type>USINT</Type>
+									<BitOffs>472</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Aus</Name>
+									<Type>INT</Type>
+									<BitOffs>488</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 3</Name>
+								<Var>
+									<Name>Status</Name>
+									<Type>USINT</Type>
+									<BitOffs>504</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Ein</Name>
+									<Type>INT</Type>
+									<BitOffs>520</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var>
+									<Name>Kontrolle</Name>
+									<Type>USINT</Type>
+									<BitOffs>504</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Aus</Name>
+									<Type>INT</Type>
+									<BitOffs>520</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 4</Name>
+								<Var>
+									<Name>Status</Name>
+									<Type>USINT</Type>
+									<BitOffs>536</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Ein</Name>
+									<Type>INT</Type>
+									<BitOffs>552</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var>
+									<Name>Kontrolle</Name>
+									<Type>USINT</Type>
+									<BitOffs>536</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Aus</Name>
+									<Type>INT</Type>
+									<BitOffs>552</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+						</Term>
+						<Term Id="5" TermType="#x1152" Fieldbus="7">
+							<Name>Klemme 5 (KL4434)</Name>
+							<ImageId>34</ImageId>
+							<Vars VarGrpType="3">
+								<Name>Kanal 1</Name>
+								<Var>
+									<Name>Status</Name>
+									<Type>USINT</Type>
+									<BitOffs>568</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Ein</Name>
+									<Type>INT</Type>
+									<BitOffs>584</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var>
+									<Name>Kontrolle</Name>
+									<Type>USINT</Type>
+									<BitOffs>568</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Aus</Name>
+									<Type>INT</Type>
+									<BitOffs>584</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 2</Name>
+								<Var>
+									<Name>Status</Name>
+									<Type>USINT</Type>
+									<BitOffs>600</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Ein</Name>
+									<Type>INT</Type>
+									<BitOffs>616</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var>
+									<Name>Kontrolle</Name>
+									<Type>USINT</Type>
+									<BitOffs>600</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Aus</Name>
+									<Type>INT</Type>
+									<BitOffs>616</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 3</Name>
+								<Var>
+									<Name>Status</Name>
+									<Type>USINT</Type>
+									<BitOffs>632</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Ein</Name>
+									<Type>INT</Type>
+									<BitOffs>648</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var>
+									<Name>Kontrolle</Name>
+									<Type>USINT</Type>
+									<BitOffs>632</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Aus</Name>
+									<Type>INT</Type>
+									<BitOffs>648</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 4</Name>
+								<Var>
+									<Name>Status</Name>
+									<Type>USINT</Type>
+									<BitOffs>664</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Ein</Name>
+									<Type>INT</Type>
+									<BitOffs>680</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+								<Var>
+									<Name>Kontrolle</Name>
+									<Type>USINT</Type>
+									<BitOffs>664</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+								<Var DisplayScale="#x1">
+									<Name>Daten Aus</Name>
+									<Type>INT</Type>
+									<BitOffs>680</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+						</Term>
+						<Term Id="6" TermType="#x580" Fieldbus="7">
+							<Name>Klemme 6 (KL1408)</Name>
+							<ImageId>7</ImageId>
+							<Vars VarGrpType="3">
+								<Name>Kanal 1</Name>
+								<Var>
+									<Name>Eingang</Name>
+									<Type>BIT</Type>
+									<BitOffs>696</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 2</Name>
+								<Var>
+									<Name>Eingang</Name>
+									<Type>BIT</Type>
+									<BitOffs>697</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 3</Name>
+								<Var>
+									<Name>Eingang</Name>
+									<Type>BIT</Type>
+									<BitOffs>698</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 4</Name>
+								<Var>
+									<Name>Eingang</Name>
+									<Type>BIT</Type>
+									<BitOffs>699</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 5</Name>
+								<Var>
+									<Name>Eingang</Name>
+									<Type>BIT</Type>
+									<BitOffs>700</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 6</Name>
+								<Var>
+									<Name>Eingang</Name>
+									<Type>BIT</Type>
+									<BitOffs>701</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 7</Name>
+								<Var>
+									<Name>Eingang</Name>
+									<Type>BIT</Type>
+									<BitOffs>702</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 8</Name>
+								<Var>
+									<Name>Eingang</Name>
+									<Type>BIT</Type>
+									<BitOffs>703</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+							</Vars>
+						</Term>
+						<Term Id="7" TermType="#x580" Fieldbus="7">
+							<Name>Klemme 7 (KL1408)</Name>
+							<ImageId>7</ImageId>
+							<Vars VarGrpType="3">
+								<Name>Kanal 1</Name>
+								<Var>
+									<Name>Eingang</Name>
+									<Type>BIT</Type>
+									<BitOffs>704</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 2</Name>
+								<Var>
+									<Name>Eingang</Name>
+									<Type>BIT</Type>
+									<BitOffs>705</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 3</Name>
+								<Var>
+									<Name>Eingang</Name>
+									<Type>BIT</Type>
+									<BitOffs>706</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 4</Name>
+								<Var>
+									<Name>Eingang</Name>
+									<Type>BIT</Type>
+									<BitOffs>707</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 5</Name>
+								<Var>
+									<Name>Eingang</Name>
+									<Type>BIT</Type>
+									<BitOffs>708</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 6</Name>
+								<Var>
+									<Name>Eingang</Name>
+									<Type>BIT</Type>
+									<BitOffs>709</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 7</Name>
+								<Var>
+									<Name>Eingang</Name>
+									<Type>BIT</Type>
+									<BitOffs>710</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 8</Name>
+								<Var>
+									<Name>Eingang</Name>
+									<Type>BIT</Type>
+									<BitOffs>711</BitOffs>
+									<InOut>0</InOut>
+								</Var>
+							</Vars>
+						</Term>
+						<Term Id="8" TermType="#x968" Fieldbus="7">
+							<Name>Klemme 8 (KL2408)</Name>
+							<ImageId>31</ImageId>
+							<Vars VarGrpType="3">
+								<Name>Kanal 1</Name>
+								<Var>
+									<Name>Ausgang</Name>
+									<Type>BIT</Type>
+									<BitOffs>696</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 2</Name>
+								<Var>
+									<Name>Ausgang</Name>
+									<Type>BIT</Type>
+									<BitOffs>697</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 3</Name>
+								<Var>
+									<Name>Ausgang</Name>
+									<Type>BIT</Type>
+									<BitOffs>698</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 4</Name>
+								<Var>
+									<Name>Ausgang</Name>
+									<Type>BIT</Type>
+									<BitOffs>699</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 5</Name>
+								<Var>
+									<Name>Ausgang</Name>
+									<Type>BIT</Type>
+									<BitOffs>700</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 6</Name>
+								<Var>
+									<Name>Ausgang</Name>
+									<Type>BIT</Type>
+									<BitOffs>701</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 7</Name>
+								<Var>
+									<Name>Ausgang</Name>
+									<Type>BIT</Type>
+									<BitOffs>702</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 8</Name>
+								<Var>
+									<Name>Ausgang</Name>
+									<Type>BIT</Type>
+									<BitOffs>703</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+						</Term>
+						<Term Id="9" TermType="#x968" Fieldbus="7">
+							<Name>Klemme 9 (KL2408)</Name>
+							<ImageId>31</ImageId>
+							<Vars VarGrpType="3">
+								<Name>Kanal 1</Name>
+								<Var>
+									<Name>Ausgang</Name>
+									<Type>BIT</Type>
+									<BitOffs>704</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 2</Name>
+								<Var>
+									<Name>Ausgang</Name>
+									<Type>BIT</Type>
+									<BitOffs>705</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 3</Name>
+								<Var>
+									<Name>Ausgang</Name>
+									<Type>BIT</Type>
+									<BitOffs>706</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 4</Name>
+								<Var>
+									<Name>Ausgang</Name>
+									<Type>BIT</Type>
+									<BitOffs>707</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 5</Name>
+								<Var>
+									<Name>Ausgang</Name>
+									<Type>BIT</Type>
+									<BitOffs>708</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 6</Name>
+								<Var>
+									<Name>Ausgang</Name>
+									<Type>BIT</Type>
+									<BitOffs>709</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 7</Name>
+								<Var>
+									<Name>Ausgang</Name>
+									<Type>BIT</Type>
+									<BitOffs>710</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+							<Vars VarGrpType="3">
+								<Name>Kanal 8</Name>
+								<Var>
+									<Name>Ausgang</Name>
+									<Type>BIT</Type>
+									<BitOffs>711</BitOffs>
+									<InOut>1</InOut>
+								</Var>
+							</Vars>
+						</Term>
+						<Term Id="1" TermType="#x2332" Fieldbus="7">
+							<Name>End-Klemme (KL9010)</Name>
+							<ImageId>32</ImageId>
+						</Term>
+					</BusCoupler>
+					<EtherCAT SlaveType="3" PdiType="#x0e08" MboxDataLinkLayer="true" StateMBoxPolling="true" CycleMBoxPollingTime="0" CoeType="51" FoeType="1" VendorId="#x00000002" ProductCode="#x047e2c22" RevisionNo="#x00120000" InfoDataAddr="true" InfoDataNetId="true" TimeoutStateChange1="5000" TimeoutMailbox2="6000" GenerateOwnNetId="true" InitializeOwnNetId="true" PortPhys="17" PortABoxInfo="#x00ffffff">
+						<SyncMan>001c88002600010001000000400000028800001c26010000</SyncMan>
+						<SyncMan>001e88002200010002000000400000028800001e22010000</SyncMan>
+						<SyncMan>001032002400010003000000000000000000001024010000</SyncMan>
+						<SyncMan>001632002000010004000000000000000000001620010000</SyncMan>
+						<Fmmu>0000000000000000001000020100000001000000000000000000000000000000</Fmmu>
+						<Fmmu>0000000000000000001600010100000002000000000000000000000000000000</Fmmu>
+						<Fmmu>00000000000000000d0800010100000003000000000000000000000000000000</Fmmu>
+						<BootStrapData>0010140200181402</BootStrapData>
+						<CoeProfile ProfileNo="5001"/>
+					</EtherCAT>
+				</Box>
+				<EtherCAT DeviceDesc="Connexion au réseau local 2 (TwinCAT-Intel PCI Ethe"/>
+			</Device>
+		</Io>
+	</Project>
+	<Mappings>
+		<MappingInfo Identifier="{00000000-0061-0101-6000-010110000403}" Id="#x03070010"/>
+		<OwnerA Name="TIPC^GestionDesModesDeMarche^GestionDesModesDeMarche Instance">
+			<OwnerB Name="TIID^Device 2 (EtherCAT)^Box 1 (BK1150)">
+				<Link VarA="PlcTask Inputs^GVL.fbAct1.IxSensIn" VarB="Term 6 (KL1408)^Channel 2^Eingang"/>
+				<Link VarA="PlcTask Inputs^GVL.fbAct1.IxSensOut" VarB="Term 6 (KL1408)^Channel 1^Eingang"/>
+				<Link VarA="PlcTask Inputs^GVL.fbAct1.xAutorizeIn" VarB="Term 7 (KL1408)^Channel 2^Eingang"/>
+				<Link VarA="PlcTask Inputs^GVL.fbAct1.xAutorizeOut" VarB="Term 7 (KL1408)^Channel 2^Eingang"/>
+				<Link VarA="PlcTask Inputs^GVL.fbAct1.xReset" VarB="Term 6 (KL1408)^Channel 8^Eingang"/>
+				<Link VarA="PlcTask Inputs^GVL.fbAct2.IxSensIn" VarB="Term 6 (KL1408)^Channel 4^Eingang"/>
+				<Link VarA="PlcTask Inputs^GVL.fbAct2.IxSensOut" VarB="Term 6 (KL1408)^Channel 3^Eingang"/>
+				<Link VarA="PlcTask Inputs^GVL.fbAct2.xAutorizeIn" VarB="Term 7 (KL1408)^Channel 2^Eingang"/>
+				<Link VarA="PlcTask Inputs^GVL.fbAct2.xAutorizeOut" VarB="Term 7 (KL1408)^Channel 2^Eingang"/>
+				<Link VarA="PlcTask Inputs^GVL.fbAct2.xReset" VarB="Term 6 (KL1408)^Channel 8^Eingang"/>
+				<Link VarA="PlcTask Inputs^GVL.fbAct3.IxSensOut" VarB="Term 6 (KL1408)^Channel 5^Eingang"/>
+				<Link VarA="PlcTask Inputs^GVL.fbAct3.xAutorizeIn" VarB="Term 7 (KL1408)^Channel 2^Eingang"/>
+				<Link VarA="PlcTask Inputs^GVL.fbAct3.xAutorizeOut" VarB="Term 7 (KL1408)^Channel 2^Eingang"/>
+				<Link VarA="PlcTask Inputs^GVL.fbAct3.xReset" VarB="Term 6 (KL1408)^Channel 8^Eingang"/>
+				<Link VarA="PlcTask Inputs^GVL.stIO.stIn.IxAruIO" VarB="Term 7 (KL1408)^Channel 1^Eingang"/>
+				<Link VarA="PlcTask Inputs^GVL.stIO.stIn.xResetIO" VarB="Term 6 (KL1408)^Channel 8^Eingang"/>
+				<Link VarA="PlcTask Inputs^GVL.stIO.stIn.xStartIO" VarB="Term 6 (KL1408)^Channel 6^Eingang"/>
+				<Link VarA="PlcTask Inputs^GVL.stIO.stIn.xStopIO" VarB="Term 6 (KL1408)^Channel 7^Eingang"/>
+				<Link VarA="PlcTask Outputs^GVL.fbAct1.QxInOutput" VarB="Term 8 (KL2408)^Channel 6^Ausgang"/>
+				<Link VarA="PlcTask Outputs^GVL.fbAct1.QxOutOutput" VarB="Term 8 (KL2408)^Channel 5^Ausgang"/>
+				<Link VarA="PlcTask Outputs^GVL.fbAct1.QxVanneDeBloquage" VarB="Term 9 (KL2408)^Channel 2^Ausgang"/>
+				<Link VarA="PlcTask Outputs^GVL.fbAct2.QxInOutput" VarB="Term 8 (KL2408)^Channel 8^Ausgang"/>
+				<Link VarA="PlcTask Outputs^GVL.fbAct2.QxOutOutput" VarB="Term 8 (KL2408)^Channel 7^Ausgang"/>
+				<Link VarA="PlcTask Outputs^GVL.fbAct3.QxOutOutput" VarB="Term 9 (KL2408)^Channel 1^Ausgang"/>
+				<Link VarA="PlcTask Outputs^GVL.stIO.stOut.QxLampeOrange" VarB="Term 8 (KL2408)^Channel 2^Ausgang"/>
+				<Link VarA="PlcTask Outputs^GVL.stIO.stOut.QxLampeRouge" VarB="Term 8 (KL2408)^Channel 1^Ausgang"/>
+				<Link VarA="PlcTask Outputs^GVL.stIO.stOut.QxLampeVerte" VarB="Term 8 (KL2408)^Channel 3^Ausgang"/>
+			</OwnerB>
+		</OwnerA>
+	</Mappings>
+</TcSmProject>

@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="FB_CycleInit" Id="{78f8b3c7-c7ef-4e76-a081-037ca3472bc0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_CycleInit
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	fbRtrigStart:R_trig;
+	xBusy:BOOL;
+	iEtape:INT;
+END_VAR
+VAR
+	fbEtape:FB_Etape;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbEtape.mActualisation(stParam.stStatus.xModePasAPas,fbBtn.xNextPas);
+
+fbRtrigStart(clk:=fbBtn.xStart);
+
+
+CASE fbEtape.iNo OF
+	0:IF fbBtn.xStart THEN
+		fbEtape.piVal:=100;
+		END_IF
+	100:fbEtape.psMess:='Initialiser les positions';
+		IF  fbAct1.IxSensIn AND fbAct2.IxSensIn THEN
+			fbEtape.piSVal:=999;
+		END_IF
+	
+	999:fbEtape.psMess:='FIN';
+		fbEtape.piSVal:=0;
+END_CASE
+
+xBusy:=fbEtape.iNo<>0;
+iEtape:=fbEtape.iNo;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

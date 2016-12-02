@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="FB_MMA" Id="{0e7ce976-5b63-45cb-af38-a3b8fef59482}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_MMA
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+	iEtape:INT;
+END_VAR
+VAR
+	fbEtape:FB_Etape;
+	p_InitVar : p_InitVar;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbEtape.mActualisation(FALSE,FALSE);
+
+//on active l'arret d'urgence
+IF NOT fbBtn.xAru AND fbEtape.iNo>10 AND fbEtape.iNo<800 THEN
+	fbEtape.piVal:=900;
+END_IF
+
+//on fait un reset
+IF fbBtn.xReset AND fbEtape.iNo>10 AND fbEtape.iNo<800 THEN
+	fbEtape.piVal:=800;
+END_IF
+
+
+CASE fbEtape.iNo OF
+	0://mise en marche du système
+		fbEtape.piVal:=10;
+	
+	10://OB100 Siemens
+		p_InitVar();
+		fbEtape.piVal:=50;
+	
+	50:fbEtape.psMess:='sélection du mode MMA';
+		IF (stParam.stStatus.eMMA=Auto) THEN
+			fbEtape.piVal:=300;
+		ELSIF (stParam.stStatus.eMMA=Man) THEN
+			fbEtape.piVal:=200;
+		ELSIF (stParam.stStatus.eMMA=Init) THEN
+			fbEtape.piVal:=100;
+		END_IF
+		
+	//--------------------------------------------------------------
+	//Init
+	//--------------------------------------------------------------
+	100:IF (stParam.stStatus.eMMA<>Init OR  NOT fbCycleInit.xBusy) THEN
+			fbEtape.piVal:=50;
+		END_IF
+		
+	//--------------------------------------------------------------
+	//Auto
+	//--------------------------------------------------------------
+	300:fbEtape.psMess:='Mode Auto, attend START';
+		IF (fbBtn.xStart) THEN
+			fbEtape.piVal:=340;
+		ELSIF (stParam.stStatus.eMMA<>Auto) THEN
+			fbEtape.piVal:=50;
+		END_IF
+	
+	340:fbEtape.psMess:='Cycle Init en cours';
+		//si le cycle INIT est terminé alors on continue
+		IF NOT fbCycleInit.xBusy THEN
+			fbEtape.piVal:=350;
+		END_IF
+		
+	350:fbEtape.psMess:='Cycle Auto en cours, attend signal de stop';
+		IF (fbBtn.xStop OR stParam.stStatus.xErreur ) THEN 
+			fbEtape.piVal:=390;
+		END_IF
+		
+	390:fbEtape.psMess:='Attend la fin du cycle auto';
+		IF (NOT fbCycleAuto.xBusy) THEN
+			fbEtape.piVal:=50;
+		END_IF
+	//--------------------------------------------------------------
+	//Reset
+	//--------------------------------------------------------------
+	800:fbEtape.psMess:='Procédure de reset, stop imédiat';
+		fbEtape.piVal:=810;
+	810:fbEtape.psMess:='Ordre pour pilotage reste sur cycle';
+		fbEtape.piVal:=899;
+	899:fbEtape.psMess:='Fin de procédure Reset';
+		fbEtape.piVal:=50;
+	//--------------------------------------------------------------
+	//ARU
+	//--------------------------------------------------------------
+	900:fbEtape.psMess:='Procédure de ARU';
+		fbEtape.piVal:=910;
+	910:fbEtape.psMess:='Ordre pour pilotage reste sur cycle';
+		fbEtape.piVal:=950;
+	950:fbEtape.psMess:='ARU ok';
+		IF fbBtn.xAru THEN
+			fbEtape.piVal:=999;
+	END_IF
+	999:fbEtape.psMess:='Fin de procédure ARU';
+		fbEtape.piVal:=50;
+END_CASE
+
+
+iEtape:=fbEtape.iNo;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="MAIN" Id="{14d3af64-b01f-43e7-a2c1-878fd3bdb950}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[bla();]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

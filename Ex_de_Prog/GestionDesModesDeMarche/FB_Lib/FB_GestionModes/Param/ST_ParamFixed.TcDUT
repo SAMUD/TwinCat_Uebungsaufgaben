@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <DUT Name="ST_ParamFixed" Id="{727b2490-7f07-4554-8c32-6bd72c5b4e76}">
+    <Declaration><![CDATA[TYPE ST_ParamFixed :
+STRUCT
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

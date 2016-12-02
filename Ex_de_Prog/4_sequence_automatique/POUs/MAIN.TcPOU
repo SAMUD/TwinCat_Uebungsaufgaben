@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="MAIN" Id="{7962cecf-7dcb-407c-b7ee-db75507d8f39}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	iStep: INT :=0; //etape
+END_VAR
+VAR_INPUT
+	IxFdcSort, IxFdcRentree: BOOL :=0; //fin de course verin | avec AT %I si lien physique
+END_VAR
+VAR_OUTPUT
+	QxFdcSort, QxFdcRentree: BOOL := 0; //actionner le verin | avec AT %Q si lien physique
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE iStep OF
+	0: iStep:=100;
+	100: //sortir verin et attendre le FDC
+		IF IxFdcSort THEN
+			IxFdcSort:=FALSE; //options simulateur
+			iStep:=200;
+		END_IF
+	200: //rentrer le verin
+		IF IxFdcRentree THEN
+			IxFdcRentree:=FALSE; //options simulation
+			iStep:=100;
+		END_IF
+END_CASE
+
+//Actions
+QxFdcRentree:=iStep=200;
+QxFdcSort:=iStep=100;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

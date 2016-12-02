@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="MAIN" Id="{88565b10-f526-4ac4-9c9a-5fc4dafa25eb}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	
+	
+END_VAR
+VAR_OUTPUT
+END_VAR]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[
+fbAct1();
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

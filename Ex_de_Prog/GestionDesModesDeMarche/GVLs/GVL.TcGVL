@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <GVL Name="GVL" Id="{6e32fb1c-48f7-43c3-87a1-93c1d099ccac}">
+    <Declaration><![CDATA[VAR_GLOBAL
+
+	fbAct1:FB_ActionneurSimple;
+	fbAct2:FB_ActionneurSimple;
+	fbAct3:FB_ActionneurSimple;
+	
+	xModeStepForStep :BOOL;
+	xNextStep : BOOL;
+	
+	//pour FB_gestion du mode
+	fbMMA:FB_MMA;
+	fbCycleAuto:FB_CycleAuto;
+	fbCycleInit : FB_CycleInit;
+	stParam:ST_Param;
+	fbBtn:FB_Btn;
+	stIO:ST_IO;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

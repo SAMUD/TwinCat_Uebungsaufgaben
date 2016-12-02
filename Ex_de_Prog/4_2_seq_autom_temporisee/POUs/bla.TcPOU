@@ -1,0 +1,54 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="bla" Id="{eabc3b11-0066-4408-8c05-978a20a482b7}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM bla
+VAR
+	iStep: INT :=0; //etape
+	Timer: TON;
+END_VAR
+VAR_INPUT
+	
+END_VAR
+VAR_OUTPUT
+	QxLED1 AT%Q* : BOOL := 0; //actionner le verin | avec AT %Q si lien physique
+	QxLED2 AT%Q* : BOOL := 0; //actionner le verin | avec AT %Q si lien physique
+	QxLED3 AT%Q* : BOOL := 0; //actionner le verin | avec AT %Q si lien physique
+	QxLED4 AT%Q* : BOOL := 0; //actionner le verin | avec AT %Q si lien physique
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[CASE iStep OF
+	0: 	Timer.PT:=T#1S;
+		iStep:=100;
+	100: //allumer la Lampe 1 et setter le timer 1s
+			Timer.PT:=T#50MS;
+			iStep:=110;
+	110: //allumer la Lampe 1 et attendre 1s
+		IF Timer.Q THEN
+			iStep:=200;
+		END_IF
+	200: //allumer la Lampe 2 et setter le timer 0.5s
+		Timer.PT:=T#150MS;
+		iStep:=210;
+	210: //allumer la Lampe 2 et attendre 0.5s
+		IF Timer.Q THEN
+			iStep:=300;
+		END_IF
+	300: //resetter LE timer
+			iStep:=310;
+	310: //attendre 0.5s
+		IF Timer.Q THEN
+			iStep:=300;
+		END_IF
+END_CASE
+//Actions
+Timer(IN:=(iStep=110 OR iStep=210 OR iStep=310));
+QxLED2:=(iStep=200 OR iStep=210);
+QxLED1:=(iStep=100 OR iStep=110);
+QxLED3:=(iStep=200 OR iStep=210);
+QxLED4:=(iStep=100 OR iStep=110);
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

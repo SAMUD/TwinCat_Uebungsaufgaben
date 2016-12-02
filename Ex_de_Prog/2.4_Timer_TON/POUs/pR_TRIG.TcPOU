@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="pR_TRIG" Id="{2ee6fd67-46d7-4c91-abd0-0dc093c21cf9}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM pR_TRIG
+VAR_INPUT
+	IxClock : BOOL:=FALSE;
+END_VAR
+VAR_OUTPUT
+	QxOutput : BOOL := FALSE;
+END_VAR
+VAR
+	MxDerniereFois2: BOOL :=FALSE;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[//writing output
+QxOutput:=IxClock AND NOT MxDerniereFois2;
+MxDerniereFois2:=IxClock;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

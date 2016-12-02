@@ -1,0 +1,35 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="p_InitVar" Id="{bba454d6-76b8-4e3f-ac36-f5356768b4a9}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK p_InitVar
+VAR_INPUT
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+	tEnvStabSort: INT;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbAct1.stParam.xPresenceSensIn:=TRUE;
+fbAct1.stParam.xPresenceSensOut:=TRUE;
+fbAct1.stParam.tTimeOut:=T#10S;
+fbAct1.stParam.tMoveInTimeDelay:=T#1.5S;
+fbAct1.stParam.tMoveOutTimeDelay:=T#1.5S;
+
+fbAct2.stParam.xPresenceSensIn:=TRUE;
+fbAct2.stParam.xPresenceSensOut:=TRUE;
+fbAct2.stParam.tTimeOut:=T#10S;
+fbAct2.stParam.tMoveInTimeDelay:=T#1.5S;
+fbAct2.stParam.tMoveOutTimeDelay:=T#1.5S;
+
+fbAct3.stParam.xPresenceSensIn:=FALSE;
+fbAct3.stParam.xPresenceSensOut:=TRUE;
+fbAct3.stParam.tTimeOut:=T#10S;
+fbAct3.stParam.tMoveInTimeDelay:=T#3S;
+fbAct3.stParam.tMoveOutTimeDelay:=T#1.5S;
+
+stParam.stStatus.eMMA:=Init;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

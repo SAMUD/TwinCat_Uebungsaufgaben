@@ -1,0 +1,21 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="FB_Btn" Id="{9d1b347e-0701-4dd1-a9e2-079105cb34be}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Btn
+VAR_INPUT
+	xStart:BOOL;
+	xStop:BOOL;
+	xReset:BOOL;
+	xNextPas:BOOL;
+	xAru:BOOL;
+END_VAR
+VAR_OUTPUT
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

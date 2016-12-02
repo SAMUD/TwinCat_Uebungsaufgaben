@@ -1,0 +1,120 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="FB_Etape" Id="{ab57e801-b1e5-4636-89e3-76acbbee7885}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Etape
+VAR_INPUT
+	tTimeQ :TIME;			//Time to stay in one state after which xTimeQ will go to TRUE
+END_VAR
+VAR_OUTPUT
+	tTimeState: TIME ; 	//passed time in the actual state
+	xTimeQ : BOOL ;		//is TRUE when time passed in the actual State is greather then tTimeQ
+	xTransition:BOOL; 	//information that the state has just changed. For use when entering a new State the first time
+	iNo:INT:=0; 		//State number running at the moment
+	sMess :STRING ; 	//Information message about the current running state
+END_VAR
+VAR
+	iMemNo:INT;				//Used for xTransition. Saves the actual state of the machine
+	fbTon:ton;				//Timer for the actual State
+	fbRtrig:R_trig;			//detector for rising edges
+	xMemModeStepByStep:BOOL;	//Mem for the actual running Mode (see method mActualisation)
+	
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="mActualisation" Id="{881b0223-f891-492a-a0e6-952fa4c455a6}">
+      <Declaration><![CDATA[//executed at each state-machine-loop
+METHOD PUBLIC mActualisation
+VAR_INPUT
+	xModeStepByStep: BOOL; //activate the Stepping-Mode (TRUE=ON)
+	xSetNextStep: BOOL; //go to the next Step on rising eddge
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//manage StepByStep
+//-----------------
+
+//Detect rising edge
+fbRtrig(CLK:=xSetNextStep);
+//copy the mode input to use it in piSVal
+xMemModeStepByStep:=xModeStepByStep;
+
+//detect a state changement in the state machine
+xTransition:=iNo<>iMemNo;
+
+//start Method when the state has changed
+IF xTransition THEN
+	mTransition();
+END_IF
+
+//manage the Timer and associated Variabels
+//-----------------------------------------
+fbTON(IN:=(iNo=iMemNo), PT:=T#71582M47S295MS, ET=>tTimeState); //will be resetted when the state is changed
+
+//going to TRUE when longer in the actual State than tTimeQ
+xTimeQ:=(tTimeState>=tTimeQ);
+
+//save the last running state
+iMemNo:=iNo;
+]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mTransition" Id="{3e29183f-8cd1-43bc-9352-9c9bd048b6ac}">
+      <Declaration><![CDATA[//Executed when a State has changed
+METHOD PRIVATE mTransition
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//make a new String to display
+sMess:=CONCAT('iNo:=',int_to_string(iNo));]]></ST>
+      </Implementation>
+    </Method>
+    <Property Name="piSVal" Id="{56028f10-4ec3-429f-b08b-b2b4b3550f54}">
+      <Declaration><![CDATA[//going to the next step while paying attention to StepByStep Mode
+PROPERTY PUBLIC piSVal : INT]]></Declaration>
+      <Set Name="Set" Id="{46e0ed07-0162-4bb2-ade0-7a3743969fdf}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[IF NOT xMemModeStepByStep THEN
+	//Step by step mode is off
+	iNo:=piSVal;
+	ELSIF fbRtrig.Q THEN
+		//a button press on "xSetNextStep" has been detected
+		iNo:=piSVal;
+END_IF]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="piVal" Id="{a2ba5a82-c9f3-4117-9227-956c99507760}">
+      <Declaration><![CDATA[//going to the next step without paying attention to StepByStep Mode
+PROPERTY PUBLIC piVal : INT]]></Declaration>
+      <Set Name="Set" Id="{c437fc17-098a-4609-94af-9cd4ef888ede}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[//set the next step
+iNo:=piVal;]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+    <Property Name="psMess" Id="{dce22f5b-0276-4ca5-81a4-435251016f1b}">
+      <Declaration><![CDATA[//
+PROPERTY PUBLIC psMess : STRING]]></Declaration>
+      <Set Name="Set" Id="{b0a90c45-30a7-4347-aeb2-e56ddf4785a7}">
+        <Declaration><![CDATA[VAR
+END_VAR
+]]></Declaration>
+        <Implementation>
+          <ST><![CDATA[//write the description of the actual step to sMess
+IF xTransition THEN
+	sMess:=psMess;
+END_IF]]></ST>
+        </Implementation>
+      </Set>
+    </Property>
+  </POU>
+</TcPlcObject>

@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="f_calcul" Id="{dd262f3c-feec-4644-810a-3295bb366717}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION f_calcul : REAL
+VAR_INPUT
+	IrAngle : REAL;
+	IrHypotenuse : REAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[f_calcul:=IrHypotenuse*SIN(IrAngle);]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

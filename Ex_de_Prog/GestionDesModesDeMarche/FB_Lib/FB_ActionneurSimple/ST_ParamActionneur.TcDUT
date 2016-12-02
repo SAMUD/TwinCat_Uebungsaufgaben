@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <DUT Name="ST_ParamActionneur" Id="{0c347d48-0c3b-4fdb-8720-88c1ac572b56}">
+    <Declaration><![CDATA[TYPE ST_ParamActionneur :
+STRUCT
+	tTimeOut : TIME; 			//max time allowed for moving to position bevor xState=TRUE
+	xPresenceSensOut : BOOL; 	//If at the out-pos a Sensor is available
+	xPresenceSensIn : BOOL; 	//If at the in-pos a Sensor is availaible
+	tMoveOutTimeDelay : TIME; 	//delay after activating xPresenceSensOut before turning off output. When there is no Sensor, only this time will be used.
+	tMoveInTimeDelay : TIME; 	//delay after activating xPresenceSensIn before turning off output. When there is no Sensor, only this time will be used.
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
