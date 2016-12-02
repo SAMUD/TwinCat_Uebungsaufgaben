@@ -38,7 +38,7 @@ CASE fbEtape.iNo OF
 		IF (stParam.stStatus.eMMA=Auto) THEN
 			fbEtape.piVal:=300;
 		ELSIF (stParam.stStatus.eMMA=Man) THEN
-			fbEtape.piVal:=200;
+			fbEtape.piVal:=210;
 		ELSIF (stParam.stStatus.eMMA=Init) THEN
 			fbEtape.piVal:=100;
 		END_IF
@@ -46,15 +46,31 @@ CASE fbEtape.iNo OF
 	//--------------------------------------------------------------
 	//Init
 	//--------------------------------------------------------------
-	100:IF (stParam.stStatus.eMMA<>Init OR  NOT fbCycleInit.xBusy) THEN
+	100:fbEtape.psMess:='Cycle Init en cours | Demarer';
+		IF (fbBtn.xStart) THEN
+			fbEtape.piVal:=110;
+		ELSIF (stParam.stStatus.eMMA<>Init) THEN
 			fbEtape.piVal:=50;
+		END_IF
+	110:fbEtape.psMess:='Cycle Init en cours | Attente fin';
+		IF fbCycleInit.iEtape=999 THEN
+		fbEtape.piVal:=50;
+		END_IF
+	111:fbEtape.psMess:='Cycle Init en cours | Finir';
+		IF fbCycleInit.xBusy THEN
+		fbEtape.piVal:=50;
 		END_IF
 		
 	//--------------------------------------------------------------
-	//Init
+	//Manual
 	//--------------------------------------------------------------
-	100:IF (stParam.stStatus.eMMA<>Man ) THEN
-			fbEtape.piVal:=50;
+	210:fbEtape.psMess:='Cycle Manuel en cours | Attente fin';
+		IF (fbCycleMan.iEtape=999) THEN
+		fbEtape.piVal:=211;
+		END_IF
+	211:fbEtape.psMess:='Cycle Manuel en cours | Finir';
+		IF (fbCycleMan.xBusy) THEN
+		fbEtape.piVal:=50;
 		END_IF
 		
 	//--------------------------------------------------------------
@@ -67,9 +83,13 @@ CASE fbEtape.iNo OF
 			fbEtape.piVal:=50;
 		END_IF
 	
-	340:fbEtape.psMess:='Cycle Init en cours';
+	340:fbEtape.psMess:='Cycle Init en cours | Demarer';
 		//si le cycle INIT est terminé alors on continue
-		IF NOT fbCycleInit.xBusy THEN
+		fbEtape.piVal:=341;
+		
+	341:fbEtape.psMess:='Cycle Init en cours | Attente fin';
+		//si le cycle INIT est terminé alors on continue
+		IF fbCycleInit.iEtape=999 THEN
 			fbEtape.piVal:=350;
 		END_IF
 		

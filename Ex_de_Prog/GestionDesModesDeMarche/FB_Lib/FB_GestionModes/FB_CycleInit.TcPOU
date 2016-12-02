@@ -4,6 +4,7 @@
     <Declaration><![CDATA[FUNCTION_BLOCK FB_CycleInit
 VAR_INPUT
 	xStart : BOOL;
+	xStop : BOOL;
 END_VAR
 VAR_OUTPUT
 	fbRtrigStart:R_trig;
@@ -27,12 +28,14 @@ CASE fbEtape.iNo OF
 	99: fbEtape.psMess:='Reset sur les Actionneurs';
 		fbEtape.piSVal:=100;
 	100:fbEtape.psMess:='Initialiser les positions';
-		IF  fbAct1.IxSensIn AND fbAct2.IxSensIn THEN
+		IF  fbAct1.IxSensIn AND fbAct2.IxSensIn AND NOT fbAct3.IxSensOut THEN
 			fbEtape.piSVal:=999;
 		END_IF
 	
-	999:fbEtape.psMess:='FIN Cycle Init';
+	999:fbEtape.psMess:='FIN Cycle Init - Attente de Stop';
+		IF (xStop) THEN
 		fbEtape.piSVal:=0;
+	END_IF
 END_CASE
 
 xBusy:=fbEtape.iNo<>0;

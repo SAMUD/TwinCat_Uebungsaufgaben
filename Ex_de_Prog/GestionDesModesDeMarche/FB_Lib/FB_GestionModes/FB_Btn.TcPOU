@@ -8,6 +8,15 @@ VAR_INPUT
 	xReset:BOOL;
 	xNextPas:BOOL;
 	xAru:BOOL;
+	
+	xManAct1Rentre: BOOL;
+	xManAct1Sort : BOOL;
+	
+	xManAct2Rentre: BOOL;
+	xManAct2Sort : BOOL;
+	
+	xManAct3Rentre: BOOL;
+	xManAct3Sort : BOOL;
 END_VAR
 VAR_OUTPUT
 END_VAR

@@ -11,6 +11,21 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"22"</v>
+              <v n="TextDefault">"Act1 Rentre / Sort"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"23"</v>
+              <v n="TextDefault">"Act2 Rentre / Sort"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"24"</v>
+              <v n="TextDefault">"Act3 Rentre / Sort"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"19"</v>
               <v n="TextDefault">"ARU"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -66,6 +81,11 @@
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
+              <v n="TextID">"25"</v>
+              <v n="TextDefault">"Mode Auto"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
               <v n="TextID">"15"</v>
               <v n="TextDefault">"Mode Auto        Selected"</v>
               <l n="LanguageTexts" t="ArrayList" />
@@ -78,6 +98,11 @@
             <o>
               <v n="TextID">"8"</v>
               <v n="TextDefault">"Mode Auto Selected"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"26"</v>
+              <v n="TextDefault">"Mode Init"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>
@@ -108,6 +133,11 @@
             <o>
               <v n="TextID">"10"</v>
               <v n="TextDefault">"Mode Man Selected"</v>
+              <l n="LanguageTexts" t="ArrayList" />
+            </o>
+            <o>
+              <v n="TextID">"27"</v>
+              <v n="TextDefault">"Mode Manual"</v>
               <l n="LanguageTexts" t="ArrayList" />
             </o>
             <o>

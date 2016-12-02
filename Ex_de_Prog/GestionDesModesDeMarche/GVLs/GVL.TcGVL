@@ -14,6 +14,8 @@
 	fbMMA:FB_MMA;
 	fbCycleAuto:FB_CycleAuto;
 	fbCycleInit : FB_CycleInit;
+	fbCycleMan : FB_CycleMan;
+	
 	stParam:ST_Param;
 	fbBtn:FB_Btn;
 	stIO:ST_IO;

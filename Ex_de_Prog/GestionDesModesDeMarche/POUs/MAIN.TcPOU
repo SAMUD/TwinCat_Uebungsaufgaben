@@ -44,7 +44,14 @@ fbCycleAuto(
 
 //fonction init sur les verins	 
 fbCycleInit(
-	xStart:=(fbMMA.iEtape=100 OR fbMMA.iEtape=340)
+	xStart:=(fbMMA.iEtape=110 OR fbMMA.iEtape=340),
+	xStop:= NOT (fbMMA.iEtape=111 OR fbMMA.iEtape=341)
+	);
+	
+//fonction Man
+fbCycleMan(
+	xStart:= fbMMA.iEtape=210,
+	xStop:=  fbMMa.iEtape<>211
 	);
 
 //--------------------------
@@ -63,13 +70,13 @@ fbAct3.xAutorizeOut:=TRUE;
 
 
 //ici on sortira et rerentrera un verin apres l'autre
-fbAct1.xInGoOut:=fbCycleAuto.iEtape=120;
-fbAct2.xInGoOut:=fbCycleAuto.iEtape=121;
-fbAct3.xInGoOut:=fbCycleAuto.iEtape=122;
+fbAct1.xInGoOut:=fbCycleAuto.iEtape=120 OR fbCycleMan.iEtape=202;
+fbAct2.xInGoOut:=fbCycleAuto.iEtape=121 OR fbCycleMan.iEtape=204;
+fbAct3.xInGoOut:=fbCycleAuto.iEtape=122 OR fbCycleMan.iEtape=206;
 
-fbAct3.xInGoIn:=fbCycleAuto.iEtape=130 OR fbCycleInit.iEtape=100;
-fbAct2.xInGoIn:=fbCycleAuto.iEtape=131 OR fbCycleInit.iEtape=100;
-fbAct1.xInGoIn:=fbCycleAuto.iEtape=132 OR fbCycleInit.iEtape=100;
+fbAct3.xInGoIn:=fbCycleAuto.iEtape=130 OR fbCycleInit.iEtape=100 OR fbCycleMan.iEtape=205;
+fbAct2.xInGoIn:=fbCycleAuto.iEtape=131 OR fbCycleInit.iEtape=100 OR fbCycleMan.iEtape=203;
+fbAct1.xInGoIn:=fbCycleAuto.iEtape=132 OR fbCycleInit.iEtape=100 OR fbCycleMan.iEtape=201;
 
 //Lampe out
 stIO.stOut.QxLampeOrange:=(fbCycleAuto.iEtape=120 OR fbCycleAuto.iEtape=121 OR fbCycleAuto.iEtape=122 OR fbCycleInit.xBusy);

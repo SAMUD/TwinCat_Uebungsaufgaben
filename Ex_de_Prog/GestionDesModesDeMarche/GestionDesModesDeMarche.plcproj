@@ -36,6 +36,9 @@
     <Compile Include="FB_Lib\FB_GestionModes\FB_CycleInit.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="FB_Lib\FB_GestionModes\FB_CycleMan.TcPOU">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="FB_Lib\FB_GestionModes\FB_MMA.TcPOU">
       <SubType>Code</SubType>
     </Compile>
