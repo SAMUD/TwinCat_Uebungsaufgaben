@@ -1,0 +1,42 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <GlobalImagePool Name="GlobalImagePool" Id="{fb2bcc9b-31b9-4039-abd4-c6af525aac04}">
+    <XmlArchive>
+      <Data>
+        <o xml:space="preserve" t="GlobalImagePoolObject">
+          <v n="UniqueIdGenerator">"15"</v>
+          <l n="BitmapPool" t="ArrayList" cet="ImagePoolItem">
+            <o>
+              <v n="BitmapID">"verinsortie2"</v>
+              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|D:\Win10\OneDrive\Studium\Schweiz\Semester5\Systemes automatises\Cours\TwinCat_Uebungsaufgaben\Ex_de_Prog\snip_20161203165155.png"</v>
+              <v n="ItemID">4</v>
+            </o>
+            <o>
+              <v n="BitmapID">"verinrentree2"</v>
+              <v n="FileID">"5ce3da45-db07-42e7-a21c-a00fff4ed8f6|D:\Win10\OneDrive\Studium\Schweiz\Semester5\Systemes automatises\Cours\TwinCat_Uebungsaufgaben\Ex_de_Prog\snip_20161203165224.png"</v>
+              <v n="ItemID">10</v>
+            </o>
+            <o>
+              <v n="BitmapID">""</v>
+              <v n="FileID">""</v>
+              <v n="ItemID">13</v>
+            </o>
+          </l>
+          <v n="GuidInit">{ca41c43c-14a3-417f-9da7-9b8a0c2f8661}</v>
+          <v n="GuidReInit">{d17a196b-2529-474d-b202-d163e1256250}</v>
+          <v n="GuidExitX">{057e6ed7-667a-4ee7-856c-da7393ef6f2d}</v>
+          <v n="ValidIds">false</v>
+        </o>
+      </Data>
+      <TypeList>
+        <Type n="ArrayList">System.Collections.ArrayList</Type>
+        <Type n="Boolean">System.Boolean</Type>
+        <Type n="GlobalImagePoolObject">{795b536d-9cec-4fc3-a972-50e1e08d20e8}</Type>
+        <Type n="Guid">System.Guid</Type>
+        <Type n="ImagePoolItem">{215b2719-0347-4e4d-ba85-8bcd66946f66}</Type>
+        <Type n="Int32">System.Int32</Type>
+        <Type n="String">System.String</Type>
+      </TypeList>
+    </XmlArchive>
+  </GlobalImagePool>
+</TcPlcObject>

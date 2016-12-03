@@ -75,6 +75,9 @@
     <Compile Include="FB_Lib\FB_GestionModes\p_InitVar.TcPOU">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="GlobalImagePool.TcGIPO">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="GlobalTextList.TcGTLO">
       <SubType>Code</SubType>
     </Compile>

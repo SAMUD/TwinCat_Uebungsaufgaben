@@ -24,7 +24,7 @@ fbRtrigStart(clk:=fbBtn.xStart);
 
 
 CASE fbEtape.iNo OF
-	0:	fbEtape.psMess:='Attente';
+	0:	fbEtape.psMess:='Attendre - Pret';
 		IF xStart THEN
 			fbEtape.piVal:=100;
 		END_IF
@@ -57,27 +57,27 @@ CASE fbEtape.iNo OF
 		
 		
 		
-	201: fbEtape.psMess:='Act 1 Rentre';
+	201: fbEtape.psMess:='Action : Act 1 Rentre';
 		IF (NOT fbBtn.xManAct1Rentre) THEN
 			fbEtape.piVal:=100;
 		END_IF
-	202: fbEtape.psMess:='Act 1 Sort';
+	202: fbEtape.psMess:='Action : Act 1 Sort';
 		IF (NOT fbBtn.xManAct1Sort) THEN
 			fbEtape.piVal:=100;
 		END_IF
-	203: fbEtape.psMess:='Act 2 Rentre';
+	203: fbEtape.psMess:='Action : Act 2 Rentre';
 		IF (NOT fbBtn.xManAct2Rentre) THEN
 			fbEtape.piVal:=100;
 		END_IF
-	204: fbEtape.psMess:='Act 2 Sort';
+	204: fbEtape.psMess:='Action : Act 2 Sort';
 		IF (NOT fbBtn.xManAct2Sort) THEN
 			fbEtape.piVal:=100;
 		END_IF
-	205: fbEtape.psMess:='Act 3 Rentre';
+	205: fbEtape.psMess:='Action : Act 3 Rentre';
 		IF (NOT fbBtn.xManAct3Rentre) THEN
 			fbEtape.piVal:=100;
 		END_IF
-	206: fbEtape.psMess:='Act 3 Sort';
+	206: fbEtape.psMess:='Action : Act 3 Sort';
 		IF (NOT fbBtn.xManAct3Sort) THEN
 			fbEtape.piVal:=100;
 		END_IF
@@ -87,7 +87,7 @@ CASE fbEtape.iNo OF
 		IF (1) THEN
 			fbEtape.piSVal:=999;
 		END_IF	
-	999:fbEtape.psMess:='Fin Cycle Man';
+	999:fbEtape.psMess:='Fin Cycle Manuel';
 		IF (xStop) THEN
 			fbEtape.piSVal:=0;
 		END_IF

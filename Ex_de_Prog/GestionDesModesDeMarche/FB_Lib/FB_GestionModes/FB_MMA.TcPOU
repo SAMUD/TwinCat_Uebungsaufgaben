@@ -34,7 +34,7 @@ CASE fbEtape.iNo OF
 		p_InitVar(); //initialiser les vars (propre a la machine)
 		fbEtape.piVal:=50;
 	
-	50:fbEtape.psMess:='sélection du mode MMA';
+	50:fbEtape.psMess:='Selection du mode MMA';
 		IF (stParam.stStatus.eMMA=Auto) THEN
 			fbEtape.piVal:=300;
 		ELSIF (stParam.stStatus.eMMA=Man) THEN
@@ -46,17 +46,17 @@ CASE fbEtape.iNo OF
 	//--------------------------------------------------------------
 	//Init
 	//--------------------------------------------------------------
-	100:fbEtape.psMess:='Cycle Init en cours | Demarer';
+	100:fbEtape.psMess:='Cycle Init | Attente de fbBtn.xStart';
 		IF (fbBtn.xStart) THEN
 			fbEtape.piVal:=110;
 		ELSIF (stParam.stStatus.eMMA<>Init) THEN
 			fbEtape.piVal:=50;
 		END_IF
-	110:fbEtape.psMess:='Cycle Init en cours | Attente fin';
+	110:fbEtape.psMess:='Cycle Init | Attente fin';
 		IF fbCycleInit.iEtape=999 THEN
 		fbEtape.piVal:=50;
 		END_IF
-	111:fbEtape.psMess:='Cycle Init en cours | Finir';
+	111:fbEtape.psMess:='Cycle Init | Finir';
 		IF fbCycleInit.xBusy THEN
 		fbEtape.piVal:=50;
 		END_IF
@@ -64,11 +64,11 @@ CASE fbEtape.iNo OF
 	//--------------------------------------------------------------
 	//Manual
 	//--------------------------------------------------------------
-	210:fbEtape.psMess:='Cycle Manuel en cours | Attente fin';
+	210:fbEtape.psMess:='Cycle Manuel | Attente de changement de mode';
 		IF (fbCycleMan.iEtape=999) THEN
 		fbEtape.piVal:=211;
 		END_IF
-	211:fbEtape.psMess:='Cycle Manuel en cours | Finir';
+	211:fbEtape.psMess:='Cycle Manuel | Finir';
 		IF (fbCycleMan.xBusy) THEN
 		fbEtape.piVal:=50;
 		END_IF
@@ -76,29 +76,29 @@ CASE fbEtape.iNo OF
 	//--------------------------------------------------------------
 	//Auto
 	//--------------------------------------------------------------
-	300:fbEtape.psMess:='Mode Auto, attend START';
+	300:fbEtape.psMess:='Mode Auto | Attente de fbBtn.xStart';
 		IF (fbBtn.xStart) THEN
 			fbEtape.piVal:=340;
 		ELSIF (stParam.stStatus.eMMA<>Auto) THEN
 			fbEtape.piVal:=50;
 		END_IF
 	
-	340:fbEtape.psMess:='Cycle Init en cours | Demarer';
+	340:fbEtape.psMess:='Mode Auto | Cycle Init - attente fin';
 		//si le cycle INIT est terminé alors on continue
 		fbEtape.piVal:=341;
 		
-	341:fbEtape.psMess:='Cycle Init en cours | Attente fin';
+	341:fbEtape.psMess:='Mode Auto | Cycle Init - Finir';
 		//si le cycle INIT est terminé alors on continue
 		IF fbCycleInit.iEtape=999 THEN
 			fbEtape.piVal:=350;
 		END_IF
 		
-	350:fbEtape.psMess:='Cycle Auto en cours, attend signal de stop';
+	350:fbEtape.psMess:='Mode Auto | Production - attend signal Stop';
 		IF (fbBtn.xStop OR stParam.stStatus.xErreur ) THEN 
 			fbEtape.piVal:=390;
 		END_IF
 		
-	390:fbEtape.psMess:='Attend la fin du cycle auto';
+	390:fbEtape.psMess:='Mode Auto | Attendre fin';
 		IF (NOT fbCycleAuto.xBusy) THEN
 			fbEtape.piVal:=50;
 		END_IF
@@ -106,25 +106,25 @@ CASE fbEtape.iNo OF
 	//--------------------------------------------------------------
 	//Reset
 	//--------------------------------------------------------------
-	800:fbEtape.psMess:='Procédure de reset, stop imédiat';
+	800:fbEtape.psMess:='Reset | Procédure de reset, stop imédiat';
 		fbEtape.piVal:=810;
-	810:fbEtape.psMess:='Ordre pour pilotage reste sur cycle';
+	810:fbEtape.psMess:='Reset | Ordre pour pilotage reste sur cycle';
 		fbEtape.piVal:=899;
-	899:fbEtape.psMess:='Fin de procédure Reset';
+	899:fbEtape.psMess:='Reset | Fin de procédure Reset';
 		fbEtape.piVal:=50;
 		
 	//--------------------------------------------------------------
 	//ARU
 	//--------------------------------------------------------------
-	900:fbEtape.psMess:='Procédure de ARU';
+	900:fbEtape.psMess:='ARU | Procédure de ARU';
 		fbEtape.piVal:=910;
-	910:fbEtape.psMess:='Ordre pour pilotage reste sur cycle';
+	910:fbEtape.psMess:='ARU | Ordre pour pilotage reste sur cycle';
 		fbEtape.piVal:=950;
-	950:fbEtape.psMess:='ARU ok';
+	950:fbEtape.psMess:='ARU | ok - Attente de quittance';
 		IF fbBtn.xAru THEN
 			fbEtape.piVal:=999;
 	END_IF
-	999:fbEtape.psMess:='Fin de procédure ARU';
+	999:fbEtape.psMess:='ARU | Fin de procédure ARU';
 		fbEtape.piVal:=50;
 END_CASE
 

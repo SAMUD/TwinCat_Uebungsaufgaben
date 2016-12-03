@@ -39,7 +39,7 @@ CASE fbEtape.iNo OF
 		//assigne le temps de comptage
 		fbEtape.tTimeQ:=T#2S;
 		fbEtape.piVal:=110;
-	110:fbEtape.psMess:='activation du compteur 2s et attendre la fin du comptage';
+	110:fbEtape.psMess:='activation compteur 2s - attendre fin comptage';
 		IF fbEtape.xTimeQ THEN
 			fbEtape.piSVal:=120;
 		END_IF
@@ -71,15 +71,15 @@ CASE fbEtape.iNo OF
 		//assigne le temps de comptage
 		fbEtape.tTimeQ:=T#1S;
 		fbEtape.piVal:=210;
-	210:fbEtape.psMess:='activation du compteur 1s et attendre la fin du comptage';
+	210:fbEtape.psMess:='activation compteur 1s - attendre fin comptage';
 		IF fbEtape.xTimeQ THEN
 			fbEtape.piSVal:=300;
 		END_IF
-	300:fbEtape.psMess:='//fonction lampes off';
+	300:fbEtape.psMess:='fonction lampes off';
 		//assigne le temps de comptage
 		fbEtape.tTimeQ:=T#2S;
 		fbEtape.piVal:=310;
-	310:fbEtape.psMess:='activation du compteur pause 2s et attendre la fin du comptage';
+	310:fbEtape.psMess:='activation compteur 2s - attendre fin comptage';
 		IF fbEtape.xTimeQ THEN
 			fbEtape.piSVal:=900;
 		END_IF

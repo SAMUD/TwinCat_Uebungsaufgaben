@@ -103,7 +103,7 @@ CASE fbEtape.iNo OF
 			fbEtape.piSVal:=199;
 		END_IF
 	199:fbEtape.psMess:='In-Position reached';
-		IF NOT IxSensIn OR NOT stParam.xPresenceSensIn THEN
+		IF (NOT IxSensIn) AND stParam.xPresenceSensIn THEN
 			fbEtape.piVal:=150;
 		END_IF
 	//-----------------------------------------------
@@ -121,7 +121,7 @@ CASE fbEtape.iNo OF
 			fbEtape.piSVal:=299;
 		END_IF
 	299:fbEtape.psMess:='Out-Pos reached';
-		IF NOT IxSensoUT OR NOT stParam.xPresenceSensoUT THEN
+		IF (NOT IxSensOut) AND stParam.xPresenceSensoUT THEN
 			fbEtape.piVal:=250;
 		END_IF
 	

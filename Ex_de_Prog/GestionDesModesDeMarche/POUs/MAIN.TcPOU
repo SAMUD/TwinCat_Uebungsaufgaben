@@ -17,8 +17,6 @@ fbMMA();
 //Le fbBouton fais pour l'instant rien d'autre que de tenir les variables.
 fbBtn.xAru:=stio.stIn.IxAruIO;
 fbBtn.xReset:=stio.stIn.xResetIO;
-fbBtn.xStart:=stio.stIn.xStartIO;
-fbBtn.xStop:= NOT stio.stIn.xStopIO;
 //et ici on l'apelle
 fbBtn();
 
@@ -26,14 +24,14 @@ fbBtn();
 stParam.stStatus.xErreur:= (fbAct2.stError.xState OR fbAct2.stError.xState OR fbAct2.stError.xState);
 
 //set les parametres dépendant de l'input
-IF stio.stIn.xAuto THEN
-	stparam.stStatus.eMMA:=Auto;
-ELSE IF stio.stIn.xManual THEN
-	stparam.stStatus.eMMA:=Man;
-	ELSE
-		stparam.stStatus.eMMA:=Init;
-	END_IF
-END_IF
+//IF stio.stIn.xAuto THEN
+	//stparam.stStatus.eMMA:=Auto;
+//ELSE IF stio.stIn.xManual THEN
+//	stparam.stStatus.eMMA:=Man;
+//	ELSE
+//		stparam.stStatus.eMMA:=Init;
+//	END_IF
+//END_IF
 
 //appel le mode auto et lui donne les parametres pour lui dire si ol peut démarrer, si il doit s'arreter ou faire un reset
 fbCycleAuto(

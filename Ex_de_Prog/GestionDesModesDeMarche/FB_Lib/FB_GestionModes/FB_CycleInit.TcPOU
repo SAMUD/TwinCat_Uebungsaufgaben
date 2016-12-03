@@ -22,17 +22,19 @@ fbRtrigStart(clk:=fbBtn.xStart);
 
 
 CASE fbEtape.iNo OF
-	0:IF xStart THEN
-		fbEtape.piVal:=99;
+	0:fbEtape.psMess:='Attendre - Pret';
+		IF xStart THEN
+			fbEtape.piVal:=99;
 		END_IF
 	99: fbEtape.psMess:='Reset sur les Actionneurs';
 		fbEtape.piSVal:=100;
+		
 	100:fbEtape.psMess:='Initialiser les positions';
-		IF  fbAct1.IxSensIn AND fbAct2.IxSensIn AND NOT fbAct3.IxSensOut THEN
+		IF  fbAct1.xInInPos AND fbAct2.xInInPos AND NOT fbAct3.xInInPos THEN
 			fbEtape.piSVal:=999;
 		END_IF
 	
-	999:fbEtape.psMess:='FIN Cycle Init - Attente de Stop';
+	999:fbEtape.psMess:='Fin Cycle Init - Attente de Stop';
 		IF (xStop) THEN
 		fbEtape.piSVal:=0;
 	END_IF
