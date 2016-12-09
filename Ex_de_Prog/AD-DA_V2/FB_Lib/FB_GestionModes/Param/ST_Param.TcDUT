@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <DUT Name="ST_Param" Id="{26ef560d-c77c-4bd5-94e0-39620c9a442a}">
+    <Declaration><![CDATA[TYPE ST_Param :
+STRUCT
+	stStatus:ST_ParamStatus;//informations d'états (compteur de pièces, modes,...)
+	stFixed:ST_ParamFixed;//Paramètres pas en lien avec le produit, fixe
+	stRecipe:ST_ParamRecipe;//Paramètres en lien avec le produit
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

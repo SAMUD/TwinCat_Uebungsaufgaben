@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="MAIN" Id="{d9a27938-4db7-45e5-a211-4332c8d65ce8}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	Consigne: LREAL;
+	deltaConsigne :LREAL;
+	PID : FB_CTRL_PID;
+	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbQa();
+fbIa();
+
+
+
+
+PID.fSetpointValue:=Consigne;
+PID.fActualValue:=fbIa.lrValeur;
+PID.eMode:=2;
+
+PID(fOut=>fbQa.lrConsigne,stParams.fKp:=2,stParams.tTn:=T#10S,stParams.tTv:=T#10S,stParams.tTd:=T#10S,stParams.fOutMaxLimit:=10,stParams.fOutMinLimit:=-10,stParams.bARWOnIPartOnly:=FALSE,
+stParams.bDInTheFeedbackPath:=TRUE,stParams.bPInTheFeedbackPath:=TRUE,stParams.tCtrlCycleTime:=T#10MS,stParams.tTaskCycleTime:=T#10MS);
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

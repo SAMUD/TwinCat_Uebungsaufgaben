@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <DUT Name="ST_Erreur" Id="{dfa9194c-c2d0-4789-9cd6-68aaf9e78ad4}">
+    <Declaration><![CDATA[TYPE ST_Erreur :
+STRUCT
+	xState:BOOL; 		//shows the current error state
+	iId : INT; 			//error number currently active
+	sMessage : STRING; 	//error message for the active error
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

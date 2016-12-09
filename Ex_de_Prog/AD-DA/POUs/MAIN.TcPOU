@@ -1,0 +1,40 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="MAIN" Id="{8c9922cf-6566-4d3b-accd-7fc21a2da9f9}" SpecialFunc="None">
+    <Declaration><![CDATA[PROGRAM MAIN
+VAR
+	trans:FB_analo_and_digital;
+	temp: LREAL;
+	consigneMot : LREAL;
+	motspeed : INT;
+END_VAR
+VAR_INPUT
+	Read AT%I* : INT;
+	ReadPot AT%I* : INT;
+END_VAR
+VAR_OUTPUT
+	Write AT%Q* : INT;
+	Motor AT%Q* : INT;
+END_VAR
+
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[IF(consigneMot<trans.oRAWValue) THEN
+	motspeed:=motspeed-20;
+END_IF
+IF(consigneMot>trans.oRAWValue) THEN
+	motspeed:=motspeed+20;
+END_IF
+
+//Motor:=motspeed;
+
+//read value fromPot and transform it into a value from -10 to 10Volt
+trans(iRAWValue:=Read,iResolution:=16,iValMin:=-30,iValMax:=30,iValInputMin:=-10,iValInputMax:=10,iTransToPhysical:=TRUE);
+temp:=trans.oPhysicalValue;
+//take the temporary variable and stretch it to 3.4 max value. write it to the display
+trans(iPhysicalValue:=temp,iResolution:=16,iValMin:=10,iValMax:=10,iTransToPhysical:=FALSE);
+write:=LREAL_TO_INT(trans.oRAWValue);
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

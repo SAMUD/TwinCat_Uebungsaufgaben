@@ -1,0 +1,101 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="FB_CycleMan" Id="{69bf83f8-70f6-4ab5-94d0-185da10a1899}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_CycleMan
+VAR_INPUT
+	xStart : BOOL;
+	xStop : BOOL;
+	
+	
+END_VAR
+VAR_OUTPUT
+	fbRtrigStart:R_trig;
+	xBusy:BOOL;
+	iEtape:INT;
+END_VAR
+VAR
+	fbEtape:FB_Etape;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbEtape.mActualisation(stParam.stStatus.xModePasAPas,fbBtn.xNextPas);
+
+fbRtrigStart(clk:=fbBtn.xStart);
+
+
+CASE fbEtape.iNo OF
+	0:	fbEtape.psMess:='Attendre - Pret';
+		IF xStart THEN
+			fbEtape.piVal:=100;
+		END_IF
+	100:fbEtape.psMess:='Selectioner quoi faire';
+		//changer de mode
+		IF  stParam.stStatus.eMMA<>Man THEN
+			fbEtape.piSVal:=990;
+		END_IF
+		//Act1:
+		IF (fbBtn.xManAct1Rentre) THEN
+			fbEtape.piVal:=201;
+		END_IF
+		IF (fbBtn.xManAct1Sort) THEN
+			fbEtape.piVal:=202;
+		END_IF
+		//Act2:
+		IF (fbBtn.xManAct2Rentre) THEN
+			fbEtape.piVal:=203;
+		END_IF
+		IF (fbBtn.xManAct2Sort) THEN
+			fbEtape.piVal:=204;
+		END_IF
+		//Act3:
+		IF (fbBtn.xManAct3Rentre) THEN
+			fbEtape.piVal:=205;
+		END_IF
+		IF (fbBtn.xManAct3Sort) THEN
+			fbEtape.piVal:=206;
+		END_IF
+		
+		
+		
+	201: fbEtape.psMess:='Action : Act 1 Rentre';
+		IF (NOT fbBtn.xManAct1Rentre) THEN
+			fbEtape.piVal:=100;
+		END_IF
+	202: fbEtape.psMess:='Action : Act 1 Sort';
+		IF (NOT fbBtn.xManAct1Sort) THEN
+			fbEtape.piVal:=100;
+		END_IF
+	203: fbEtape.psMess:='Action : Act 2 Rentre';
+		IF (NOT fbBtn.xManAct2Rentre) THEN
+			fbEtape.piVal:=100;
+		END_IF
+	204: fbEtape.psMess:='Action : Act 2 Sort';
+		IF (NOT fbBtn.xManAct2Sort) THEN
+			fbEtape.piVal:=100;
+		END_IF
+	205: fbEtape.psMess:='Action : Act 3 Rentre';
+		IF (NOT fbBtn.xManAct3Rentre) THEN
+			fbEtape.piVal:=100;
+		END_IF
+	206: fbEtape.psMess:='Action : Act 3 Sort';
+		IF (NOT fbBtn.xManAct3Sort) THEN
+			fbEtape.piVal:=100;
+		END_IF
+	
+	990:fbEtape.psMess:='Finir Cycle Man';
+		//ici on fait des choses de fin (ex. eteindre un moteur qui tourne encore)
+		IF (1) THEN
+			fbEtape.piSVal:=999;
+		END_IF	
+	999:fbEtape.psMess:='Fin Cycle Manuel';
+		IF (xStop) THEN
+			fbEtape.piSVal:=0;
+		END_IF
+		
+END_CASE
+
+xBusy:=fbEtape.iNo<>0;
+iEtape:=fbEtape.iNo;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

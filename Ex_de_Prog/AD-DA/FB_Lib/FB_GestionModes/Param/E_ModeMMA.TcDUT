@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <DUT Name="E_ModeMMA" Id="{d3581240-75c9-458a-ae87-17f980a21f5b}">
+    <Declaration><![CDATA[
+TYPE E_ModeMMA :
+(
+	Init := 0,
+	Auto,
+	Man
+);
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

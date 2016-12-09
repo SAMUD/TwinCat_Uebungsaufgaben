@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="FB_ConfigAnalog" Id="{42bb8469-1f67-4f9a-9ae7-94da8136d280}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ConfigAnalog
+VAR_INPUT
+	///nombre de bit de la variable de transit du bus de terrain
+	uiNbreBitBus: UINT;
+	///nombre de bit du convertiseur Analogique/digital 
+	uiNbreBitConv: UINT;
+	///valeur min et max de la tension
+	stTension: ST_minMax;
+	///valeur min et max de la consigne
+	stValeur: ST_minMax;
+END_VAR
+VAR
+	udiNbreIncBus: UDINT;
+	lrTemp: LREAL;
+	///nombre d'incrément avant décalage d'offset sur valeur de consigne
+	lrValInc: LREAL;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[]]></ST>
+    </Implementation>
+    <Method Name="mCalculDelta" Id="{c872881f-9282-4ffa-843c-d87b8b2bc91d}">
+      <Declaration><![CDATA[METHOD mCalculDelta : LREAL
+VAR_INPUT
+	stMinMax: ST_MinMax;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[mCalculDelta:=stMinMax.lrMax-stMinMax.lrMin;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mCalculInc" Id="{4469b176-bd1f-4057-acbc-78554f3fd20f}">
+      <Declaration><![CDATA[METHOD mCalculInc : UDINT
+VAR_INPUT
+	uiNbreBitBus: UDINT;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[
+mCalculInc:=SHL(1,uiNbreBitBus);
+//mCaclulInc:=EXPT(2,uiNbreBitBus);]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mConvertAnToVal" Id="{2b296985-75aa-4480-8599-a1b6f16cff8c}">
+      <Declaration><![CDATA[METHOD mConvertAnToVal : LREAL
+VAR_INPUT
+	///valeur de consigne
+	lrAna: LREAL;
+END_VAR
+VAR_OUTPUT
+	///tension de la borne de sortie
+	lrTension: LREAL;
+	///Ecart de l'escalier sur la borne de sortie en unité de valeur
+	lrEcart: LREAL;
+END_VAR
+VAR
+	lrValeur: LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//vérification que lrVal compris entre min et max
+(*IF lrVal>stValeur.lrMax THEN
+	lrVal:=stValeur.lrMax;
+END_IF
+IF lrVal>stValeur.lrMin THEN
+	lrVal:=stValeur.lrMin;
+END_IF*)
+(*
+lrVal:=MAX(lrVal,stValeur.lrMax);
+lrVal:=MIN(lrVal,stValeur.lrMin);
+*)
+
+
+//Calcul du nombre d'incréments
+udiNbreIncBus:=mCalculInc(uiNbreBitBus);
+//Conversion de la valeur vers le résultat
+//deltaTension/Nbreinc <-> deltaVal/Nbreinc val
+lrValeur:=0;//réponse = 0 si hors condition
+IF mCalculDelta(stValeur)<>0 THEN
+	//décalage selon min max de la tension
+	//IF stTension.lrMin<0 THEN
+	//	//ajout de l'offset si min négatif
+	//	lrTemp:=lrValInc-udiNbreIncBus/2-1;
+	//	ELSE
+	//	lrTemp:=lrValInc;
+	//END_IF
+	//nombre d'incréments par rapport à lrVal, avec décalage de stValeur.lrMin
+	//lrValeur:=(lrAna*mCalculDelta(stValeur)-stValeur.lrMin)/udiNbreIncBus;
+	//lrValInc:=udiNbreIncBus*(lrVal-stValeur.lrMin)/mCalculDelta(stValeur);
+	//temp:=(iValMax-iValMin) / temp2;
+	//oPhysicalValue:=iValMin + (temp * (iRAWValue+temp2/2));
+	lrValeur:=(mCalculDelta(stValeur)/udiNbreIncBus)*lrAna;
+	
+END_IF
+//résultat de la méthode
+mConvertAnToVal:=lrValeur;
+//calcul de l'incrément tension
+lrEcart:=(mCalculDelta(stTension)/udiNbreIncBus);
+//résultat en unitée de tension
+lrTension:=lrValInc*lrEcart+stTension.lrMin;]]></ST>
+      </Implementation>
+    </Method>
+    <Method Name="mConvertValToAn" Id="{c493e7d9-6467-4aea-9f8d-7a41b90d966d}">
+      <Declaration><![CDATA[METHOD mConvertValToAn : DINT
+VAR_INPUT
+	///valeur de consigne
+	lrVal: LREAL;
+END_VAR
+VAR_OUTPUT
+	///tension de la borne de sortie
+	lrTension: LREAL;
+	///Ecart de l'escalier sur la borne de sortie en unité de valeur
+	lrEcart: LREAL;
+END_VAR
+]]></Declaration>
+      <Implementation>
+        <ST><![CDATA[//vérification que lrVal compris entre min et max
+(*IF lrVal>stValeur.lrMax THEN
+	lrVal:=stValeur.lrMax;
+END_IF
+IF lrVal>stValeur.lrMin THEN
+	lrVal:=stValeur.lrMin;
+END_IF*)
+(*
+lrVal:=MAX(lrVal,stValeur.lrMax);
+lrVal:=MIN(lrVal,stValeur.lrMin);
+*)
+lrVal:=LIMIT(stValeur.lrMin,lrVal,stValeur.lrMax);
+
+//Calcul du nombre d'incréments
+udiNbreIncBus:=mCalculInc(uiNbreBitBus);
+//Conversion de la valeur vers le résultat
+//deltaTension/Nbreinc <-> deltaVal/Nbreinc val
+lrTemp:=0;//réponse = 0 si hors condition
+IF mCalculDelta(stValeur)<>0 THEN
+	//nombre d'incréments par rapport à lrVal, avec décalage de stValeur.lrMin
+	lrValInc:=udiNbreIncBus*(lrVal-stValeur.lrMin)/mCalculDelta(stValeur);
+	//décalage selon min max de la tension
+	IF stTension.lrMin<0 THEN
+		//ajout de l'offset si min négatif
+		lrTemp:=lrValInc-udiNbreIncBus/2-1;
+		ELSE
+		lrTemp:=lrValInc;
+	END_IF
+END_IF
+//résultat de la méthode
+mConvertValToAn:=LREAL_TO_DINT(lrTemp);
+//calcul de l'incrément tension
+lrEcart:=(mCalculDelta(stTension)/udiNbreIncBus);
+//résultat en unitée de tension
+lrTension:=lrValInc*lrEcart+stTension.lrMin;
+]]></ST>
+      </Implementation>
+    </Method>
+  </POU>
+</TcPlcObject>

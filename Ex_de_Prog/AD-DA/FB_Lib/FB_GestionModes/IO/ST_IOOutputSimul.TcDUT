@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <DUT Name="ST_IOOutputSimul" Id="{dac96146-4177-4640-8800-f9871a7be774}">
+    <Declaration><![CDATA[TYPE ST_IOOutputSimul :
+STRUCT
+	QxLampeRouge AT%Q*:BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

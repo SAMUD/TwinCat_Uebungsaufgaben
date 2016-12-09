@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="FB_CycleAuto" Id="{fa0f70cb-a319-472f-aa11-31f07f0b58db}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_CycleAuto
+VAR_INPUT
+	xStart:BOOL;
+	xStop:BOOL;
+	xReset:BOOL;
+END_VAR
+VAR_OUTPUT
+	fbRtrigStart:R_trig;
+	xBusy:BOOL;
+	xMemStop:BOOL:=FALSE;
+	iEtape:INT;
+END_VAR
+VAR
+	fbEtape:FB_Etape;
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbEtape.mActualisation(stParam.stStatus.xModePasAPas,fbBtn.xNextPas);
+
+fbRtrigStart(clk:=xStart);
+
+IF xStop THEN
+	xMemStop:=TRUE;
+END_IF
+
+IF xReset THEN
+	fbEtape.piVal:=0;
+END_IF
+
+CASE fbEtape.iNo OF
+	0:IF fbRtrigStart.Q THEN
+		xMemStop:=FALSE;
+		fbEtape.piVal:=100;
+	END_IF
+	100:fbEtape.psMess:='fonction allume lampe1';
+		//assigne le temps de comptage
+		fbEtape.tTimeQ:=T#2S;
+		fbEtape.piVal:=110;
+	110:fbEtape.psMess:='activation compteur 2s - attendre fin comptage';
+		IF fbEtape.xTimeQ THEN
+			fbEtape.piSVal:=120;
+		END_IF
+	120:fbEtape.psMess:='Actionneur1 sort';
+		IF fbAct1.xInOutPos THEN
+			fbEtape.piSVal:=121;
+		END_IF
+	121:fbEtape.psMess:='Actionneur2 sort';
+		IF fbAct2.xInOutPos THEN
+			fbEtape.piSVal:=122;
+		END_IF
+	122:fbEtape.psMess:='Actionneur3 sort';
+		IF fbAct3.xInOutPos THEN
+			fbEtape.piSVal:=130;
+		END_IF
+	130:fbEtape.psMess:='Actionneur3 rentre';
+		IF fbAct3.xInInPos THEN
+			fbEtape.piSVal:=131;
+		END_IF
+	131:fbEtape.psMess:='Actionneur2 rentre';
+		IF fbAct2.xInInPos THEN
+			fbEtape.piSVal:=132;
+		END_IF
+	132:fbEtape.psMess:='Actionneur1 rentre';
+		IF fbAct1.xInInPos THEN
+			fbEtape.piSVal:=200;
+		END_IF
+	200:fbEtape.psMess:='fonction allume lampe1';
+		//assigne le temps de comptage
+		fbEtape.tTimeQ:=T#1S;
+		fbEtape.piVal:=210;
+	210:fbEtape.psMess:='activation compteur 1s - attendre fin comptage';
+		IF fbEtape.xTimeQ THEN
+			fbEtape.piSVal:=300;
+		END_IF
+	300:fbEtape.psMess:='fonction lampes off';
+		//assigne le temps de comptage
+		fbEtape.tTimeQ:=T#2S;
+		fbEtape.piVal:=310;
+	310:fbEtape.psMess:='activation compteur 2s - attendre fin comptage';
+		IF fbEtape.xTimeQ THEN
+			fbEtape.piSVal:=900;
+		END_IF
+	900:fbEtape.psMess:='Test si demande arrrêt en fin de cycle';
+		IF xMemStop THEN
+		fbEtape.piSVal:=999;
+		ELSE
+		fbEtape.piSVal:=100;
+	END_IF
+	999:fbEtape.psMess:='FIN';
+		fbEtape.piSVal:=0;
+END_CASE
+
+xBusy:=fbEtape.iNo<>0;
+iEtape:=fbEtape.iNo;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

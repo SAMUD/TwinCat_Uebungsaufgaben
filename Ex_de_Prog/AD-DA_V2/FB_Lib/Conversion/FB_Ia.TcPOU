@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="FB_Ia" Id="{066a8567-c425-448a-b812-c781f3454bc0}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_Ia
+VAR_INPUT
+	///configuration de la sortie analogique
+	fbConfig: FB_ConfigAnalog;
+END_VAR
+VAR_OUTPUT
+	///Valeur dans l'unité de l'utilisateur, selon min et max de fbCongig.stValeur
+	lrValeur: LREAL;
+	///sortie analogique, atention, supprimer MatchingSize lors de la liaison avec la borne
+	IaEntree AT%I*: INT;
+	///écart de précision sur la valeur de consigne => valeur +/- écart
+	lrEcart: LREAL;
+	///tension en volt
+	lrTension: LREAL;
+END_VAR
+VAR
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[lrValeur:=fbConfig.mConvertAnToVal(IaEntree,lrTension=>lrTension,lrEcart=>lrEcart);
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

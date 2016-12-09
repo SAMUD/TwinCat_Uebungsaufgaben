@@ -1,0 +1,175 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="FB_ActionneurSimple" Id="{aec380c0-06de-4ccd-936b-9a6110212db7}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_ActionneurSimple
+VAR_INPUT
+	xInGoOut AT%I*:BOOL;				//input for going out
+	xInGoIn AT%I*:BOOL;					//input for going in
+	xReset AT%I*:BOOL;					//Reset all (go back to init state
+	
+	xAutorizeOut AT%I* : BOOL;		//allowed to do the move requested with xInGoOut, If this is false Programm will threw an error
+	xAutorizeIn At%I* : BOOL;			//allowed to do the move requested with xInGoIn, If this is false Programm will threw an error
+	
+	stParam:ST_ParamActionneur;	//Param for actuator 
+END_VAR
+VAR_OUTPUT
+	xInOutPos:BOOL;
+	xInInPos:BOOL;
+	
+	xGoingOutNow AT%Q*:BOOL; //indication that actor is going in Out-Pos
+	xGoingInNow AT%Q*:BOOL; //indication that actor is going in In-Pos
+	
+	QxOutOutput AT%Q*:BOOL;//Output to actuator for going Out
+	QxInOutput AT%Q*:BOOL;//Output to actuator for going In
+	
+	IxSensOut AT%I*:BOOL;	//Sensor for the reached In-Pos
+	IxSensIn AT%I*:BOOL;//Sensor for the reached Out-Pos
+		
+	stError:ST_Erreur;//Error Struct
+	
+	QxVanneDeBloquage AT%Q* : BOOL; //Vanne de blocace. Elle devient seulement 1 si l'autorisation entree/sortie est present
+END_VAR
+VAR
+	fbEtape:FB_Etape;
+	fbTimeOut:TON;
+	fbRTrigOut:R_Trig;
+	fbRTrigIn:R_Trig;
+		
+	
+
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[fbEtape.mActualisation(xModeStepForStep,xNextStep);
+
+//check rising edges on 
+fbRTrigOut(clk:=xInGoOut);
+fbRTrigIn(clk:=xInGoIn);
+
+//Go to the next step when there is an Out-Command
+IF fbRTrigOut.Q AND NOT(fbEtape.iNo>=200 AND fbEtape.iNo<=299) THEN	//When rising-edge was detected
+	IF xAutorizeOut THEN
+		fbEtape.piVal:=200;
+	ELSE
+		stError.iId:=10;
+		stError.sMessage:='Autorisation refusee pour action sortir verin';
+	END_IF		
+fbEtape.piVal:=200;	
+END_IF
+
+//Go to the next step when there is an In-Command
+IF fbRTrigIn.Q AND NOT(fbEtape.iNo>=100 AND fbEtape.iNo<=199) THEN	//When rising-edge was detected and not already going In
+	IF xAutorizeIn THEN
+		fbEtape.piVal:=100;
+	ELSE
+		stError.iId:=11;
+		stError.sMessage:='Autorisation refusee pour action rentrer verin';
+	END_IF	
+END_IF
+
+//Reset
+IF xReset THEN
+	fbEtape.piVal:=0;
+	stError.xState:=0;
+	xInOutPos:=0;
+	xInInPos:=0;
+END_IF
+
+//check pour vanne de blocage
+QxVanneDeBloquage:= (xAutorizeOut OR xAutorizeIn);
+
+//Reset de l'erreur
+IF stError.xState THEN
+	stError.iId:=0;
+	stError.sMessage:='';
+END_IF
+
+
+
+CASE fbEtape.iNo OF
+	0:fbEtape.psMess:='Wait for an In or Out command';
+	//-----------------------------------------------
+	100:fbEtape.psMess:='Action go In';
+		IF xAutorizeIn THEN
+			fbEtape.piVal:=110;
+			fbEtape.tTimeQ:=stParam.tMoveInTimeDelay;
+		END_IF
+	110:fbEtape.psMess:='Going in, waiting for IxSensIn';
+		IF (IxSensIn AND stParam.xPresenceSensIn) OR NOT stParam.xPresenceSensIn THEN
+			fbEtape.piVal:=150;
+		END_IF
+	150:fbEtape.psMess:='Action rentre, attend tenps d enveloppe';
+		IF fbEtape.xTimeQ THEN
+			fbEtape.piSVal:=199;
+		END_IF
+	199:fbEtape.psMess:='In-Position reached';
+		IF (NOT IxSensIn) AND stParam.xPresenceSensIn THEN
+			fbEtape.piVal:=150;
+		END_IF
+	//-----------------------------------------------
+	200:fbEtape.psMess:='Action go Out';
+		IF xAutorizeOut THEN
+			fbEtape.piVal:=210;
+			fbEtape.tTimeQ:=stParam.tMoveInTimeDelay;
+		END_IF
+	210:fbEtape.psMess:='Going Out, waiting for IxSensOut';
+		IF (IxSensOut AND stParam.xPresenceSensOut) OR NOT stParam.xPresenceSensOut THEN
+			fbEtape.piVal:=250;
+		END_IF
+	250:fbEtape.psMess:='Action sort, attend temps d enveloppe';
+		IF fbEtape.xTimeQ THEN
+			fbEtape.piSVal:=299;
+		END_IF
+	299:fbEtape.psMess:='Out-Pos reached';
+		IF (NOT IxSensOut) AND stParam.xPresenceSensoUT THEN
+			fbEtape.piVal:=250;
+		END_IF
+	
+	999:fbEtape.psMess:='Erreur';
+END_CASE
+
+//Activation du Timer
+fbTimeOut(IN:=(fbEtape.iNo>100 AND fbEtape.iNo<199 OR fbEtape.iNo>200 AND fbEtape.iNo<299)
+				AND (NOT fbRTrigIn.Q AND NOT fbRTrigOut.Q),PT:=stParam.tTimeOut);	
+
+
+(*Liste des erreurs possibles :
+-	10 Si un ordre de déplacement sort est donné et que l’entrée, xAutoriseSort n’est pas vrai, on indique une erreur
+-	11 Idem pour xAutoriseRentre
+-	20 Erreur de timeout sort
+-	21 Erreur de timeout rentre
+-	30 Les deux fins de course sont vraies en même temps
+-	31 Double consignes, xSetSort=1 et xSetRentre=1*)				
+//Gestion des erreurs
+IF fbTimeOut.Q THEN
+	IF fbEtape.iNo < 200 THEN
+		stError.sMessage:='Erreur de timeout rentre';
+		stError.iId:=21;
+	ELSIF fbEtape.iNo>200 THEN
+		stError.sMessage:='Erreur de timeout sort';
+		stError.iId:=20;
+	END_IF
+ELSIF IxSensIn AND IxSensOut THEN
+	stError.sMessage:='Les deus fins de course sont vraies en même temps';
+	stError.iId:=30;
+ELSIF xInGoOut AND xInGoIn THEN
+	stError.sMessage:='Double consigne,xSetSort=1 et xSetRentre=1';
+	stError.iId:=31;
+END_IF
+
+stError.xState :=fbEtape.iNo=999 OR fbTimeOut.Q OR (IxSensIn AND IxSensOut) OR (xInGoIn AND xInGoOut);
+
+
+//Activation des états
+xInInPos:=fbEtape.iNo=199;
+xInOutPos:=fbEtape.iNo=299;
+xGoingInNow:= QxInOutput AND NOT IxSensIn;
+xGoingOutNow:= QxOutOutput AND NOT IxSensOut;
+
+
+//Activation des sorties
+QxOutOutput:=fbEtape.iNo>200 AND fbEtape.iNo<=299;
+QxInOutput:=fbEtape.iNo>100 AND fbEtape.iNo<=199;]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

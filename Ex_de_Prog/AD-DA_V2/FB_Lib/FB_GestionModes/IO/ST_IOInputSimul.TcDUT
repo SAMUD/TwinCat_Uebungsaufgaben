@@ -1,0 +1,11 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <DUT Name="ST_IOInputSimul" Id="{d975d12d-7e8d-4225-b1f2-f54f3150cc91}">
+    <Declaration><![CDATA[TYPE ST_IOInputSimul :
+STRUCT
+	IxAru :BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

@@ -1,0 +1,47 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <POU Name="FB_analo_and_digital" Id="{0292950d-3b6c-4501-a0e1-5500a523dd03}" SpecialFunc="None">
+    <Declaration><![CDATA[FUNCTION_BLOCK FB_analo_and_digital
+VAR_INPUT
+	iRAWValue : LREAL;				//raw Value read from sensor (registre)
+	iResolution : INT; 				//resolution in bits
+	iValMin: LREAL;					//min physical value possible
+	iValMax: LREAL;					//max physical value possible
+	iTransToPhysical : BOOL;		//RAW --> Physical when TRUE
+	iValInputMax: LREAL;			//max input value at the Box--> normaly -10 to 10V
+	iValInputMin: LREAL;			//min input value at the Box--> normaly -10 to 10V
+	iPhysicalValue : LREAL;			//valeur physique
+END_VAR
+VAR_OUTPUT
+	oPhysicalValue : LREAL;			//valeur physique sur l'entree de l'input
+	oInputValue : LREAL;			//valeur physique sur l'entree de l'input dans la plage de ValInputMax / min
+	oRAWValue : LREAL;				//raw Value read from sensor (registre)
+END_VAR
+VAR	
+	temp : LREAL;
+	temp2 : LREAL;	
+END_VAR
+]]></Declaration>
+    <Implementation>
+      <ST><![CDATA[temp2:=expt(2,iResolution);
+
+
+
+IF(iTransToPhysical) THEN
+	//RAW Input to physical value
+	temp:=(iValInputMax-iValInputMin) / temp2;
+	oInputValue:=iValInputMin + (temp * (iRAWValue + temp2/2));
+	
+	
+	temp:=(iValMax-iValMin) / temp2;
+	oPhysicalValue:=iValMin + (temp * (iRAWValue+temp2/2));
+ELSE
+	//Physical value to raw-Value
+	temp:=(iValMax-iValMin) / temp2;
+	oRAWValue:= iValMin+ (iPhysicalValue / temp);
+			
+END_IF
+]]></ST>
+    </Implementation>
+  </POU>
+</TcPlcObject>

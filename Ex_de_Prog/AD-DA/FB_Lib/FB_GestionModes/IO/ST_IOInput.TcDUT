@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <DUT Name="ST_IOInput" Id="{06001811-ace2-42b6-824a-d4e3de9452eb}">
+    <Declaration><![CDATA[TYPE ST_IOInput :
+STRUCT
+	IxAruIO AT%I*  :BOOL;
+	xStartIO AT%I* :BOOL;
+	xStopIO AT%I*  :BOOL;
+	xResetIO AT%I* :BOOL;
+	xAuto AT%I* : BOOL;
+	xManual AT%I* : BOOL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>

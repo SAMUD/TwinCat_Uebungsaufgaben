@@ -1,0 +1,10 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <GVL Name="GVL" Id="{1e7ef6ab-0025-4e7c-bbe7-488b25ba0afa}">
+    <Declaration><![CDATA[
+VAR_GLOBAL
+		fbQa:FB_Qa;
+		fbIa:FB_Ia;
+END_VAR]]></Declaration>
+  </GVL>
+</TcPlcObject>

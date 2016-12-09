@@ -65,7 +65,7 @@
 	<ImageDatas>
 		<ImageData Id="1000">424de6000000000000007600000028000000100000000e000000010004000000000070000000c40e0000c40e0000100000001000000000000000ff0000000084000084848400c6c6c6000000ff00ff00ff0000ffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff00ffffff0066333333333336666644444340403666664004434747366666405443444436666640044340403666664004434141366666400453444436666640042340403666664444444545366600044544444436660644454440403666004555554444366606444544424236660004454444443666</ImageData>
 	</ImageDatas>
-	<Project ProjectGUID="{6FC86F7E-5057-4B64-9C35-B454039DE676}" Target64Bit="true" ShowHideConfigurations="#x6">
+	<Project ProjectGUID="{6FC86F7E-5057-4B64-9C35-B454039DE676}" TargetNetId="157.26.1.24.1.6" Target64Bit="true" ShowHideConfigurations="#x6">
 		<System>
 			<Settings MaxCpus="4">
 				<Cpu LatencyWarning="1000"/>
@@ -245,7 +245,7 @@
 					</TaskPouOids>
 				</Instance>
 			</Project>
-			<Project GUID="{6CA7F5C2-0E9E-4085-B815-A5E683635463}" Name="GestionDesModesDeMarche" PrjFilePath="GestionDesModesDeMarche\GestionDesModesDeMarche.plcproj" TmcFilePath="GestionDesModesDeMarche\GestionDesModesDeMarche.tmc" ReloadTmc="true" AmsPort="856" FileArchiveSettings="#x000e">
+			<Project Disabled="true" GUID="{6CA7F5C2-0E9E-4085-B815-A5E683635463}" Name="GestionDesModesDeMarche" PrjFilePath="GestionDesModesDeMarche\GestionDesModesDeMarche.plcproj" TmcFilePath="GestionDesModesDeMarche\GestionDesModesDeMarche.tmc" ReloadTmc="true" AmsPort="856" FileArchiveSettings="#x000e">
 				<Instance Id="#x01010060" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
 					<Name>GestionDesModesDeMarche Instance</Name>
 					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
@@ -548,9 +548,98 @@
 					</TaskPouOids>
 				</Instance>
 			</Project>
+			<Project Disabled="true" GUID="{C55551A3-AD26-48C8-B8F4-4718DAEB3048}" Name="AD-DA" PrjFilePath="AD-DA\AD-DA.plcproj" TmcFilePath="AD-DA\AD-DA.tmc" ReloadTmc="true" AmsPort="857" FileArchiveSettings="#x000e">
+				<Instance Id="#x01010070" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+					<Name>AD-DA Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Vars VarGrpType="1">
+						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>MAIN.Read</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.ReadPot</Name>
+							<Type>INT</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="2">
+						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>MAIN.Motor</Name>
+							<Type>INT</Type>
+						</Var>
+						<Var>
+							<Name>MAIN.Write</Name>
+							<Type>INT</Type>
+						</Var>
+					</Vars>
+					<UnrestoredVarLinks ImportTime="2016-12-09T11:09:18">
+						<OwnerA Name="OutputSrc" Prefix="TIPC^AD-DA^AD-DA Instance" Type="2">
+							<OwnerB Name="TIID^Device 2 (EtherCAT)^Box 1 (BK1150)">
+								<Link VarA="MAIN.Speed" TypeA="INT" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000006}" VarB="Term 2 (KL2531)^Channel 1^Velocity" RestoreInfo="ANotFound"/>
+								<Link VarA="MAIN.Status" TypeA="BOOL" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000030}" VarB="Term 2 (KL2531)^Channel 1^Ctrl" RestoreInfo="ANotFound"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+					<UnrestoredVarLinks ImportTime="2016-12-09T13:02:07">
+						<OwnerA Name="InputDst" Prefix="TIPC^AD-DA^AD-DA Instance" Type="1">
+							<OwnerB Name="TIID^Device 2 (EtherCAT)^Box 1 (BK1150)">
+								<Link VarA="MAIN.Read" TypeA="UINT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="Term 4 (KL3404)^Channel 1^Daten Ein" RestoreInfo="TypeMismatch" OldTypeA="UINT" OldGuidA="{18071995-0000-0000-0000-000000000005}" NewTypeA="INT" NewGuidA="{18071995-0000-0000-0000-000000000006}"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+					<UnrestoredVarLinks ImportTime="2016-12-09T13:05:53">
+						<OwnerA Name="OutputSrc" Prefix="TIPC^AD-DA^AD-DA Instance" Type="2">
+							<OwnerB Name="TIID^Device 2 (EtherCAT)^Box 1 (BK1150)">
+								<Link VarA="MAIN.Write" TypeA="UINT" InOutA="1" GuidA="{18071995-0000-0000-0000-000000000005}" VarB="Term 5 (KL4434)^Channel 1^Daten Aus" RestoreInfo="TypeMismatch" OldTypeA="UINT" OldGuidA="{18071995-0000-0000-0000-000000000005}" NewTypeA="INT" NewGuidA="{18071995-0000-0000-0000-000000000006}"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+					<TaskPouOids>
+						<TaskPouOid Prio="20" OTCID="#x01010071"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
+			<Project GUID="{A5812D44-81AC-4C33-BB18-4E3033AE1A62}" Name="AD-DA_V2" PrjFilePath="AD-DA_V2\AD-DA_V2.plcproj" TmcFilePath="AD-DA_V2\AD-DA_V2.tmc" ReloadTmc="true" AmsPort="858" FileArchiveSettings="#x000e">
+				<Instance Id="#x01010080" TcSmClass="TComPlcObjDef" KeepUnrestoredLinks="2">
+					<Name>AD-DA_V2 Instance</Name>
+					<CLSID ClassFactory="TcPlc30">{08500001-0000-0000-F000-000000000064}</CLSID>
+					<Vars VarGrpType="1">
+						<Name>PlcTask Inputs</Name>
+						<Var>
+							<Name>GVL.fbIa.IaEntree</Name>
+							<Comment>
+								<![CDATA[sortie analogique, atention, supprimer MatchingSize lors de la liaison avec la borne]]>
+							</Comment>
+							<Type>INT</Type>
+						</Var>
+					</Vars>
+					<Vars VarGrpType="2">
+						<Name>PlcTask Outputs</Name>
+						<Var>
+							<Name>GVL.fbQa.QaSortie</Name>
+							<Comment>
+								<![CDATA[sortie analogique, atention, supprimer MatchingSize lors de la liaison avec la borne]]>
+							</Comment>
+							<Type>DINT</Type>
+						</Var>
+					</Vars>
+					<UnrestoredVarLinks ImportTime="2016-12-09T16:45:24">
+						<OwnerA Name="InputDst" Prefix="TIPC^AD-DA_V2^AD-DA_V2 Instance" Type="1">
+							<OwnerB Name="TIID^Device 2 (EtherCAT)^Box 1 (BK1150)">
+								<Link VarA="GVL.fbIa.IaEntree" TypeA="DINT" InOutA="0" GuidA="{18071995-0000-0000-0000-000000000009}" VarB="Term 4 (KL3404)^Channel 2^Daten Ein" Size="16" RestoreInfo="TypeMismatch" OldTypeA="DINT" OldGuidA="{18071995-0000-0000-0000-000000000009}" NewTypeA="INT" NewGuidA="{18071995-0000-0000-0000-000000000006}"/>
+							</OwnerB>
+						</OwnerA>
+					</UnrestoredVarLinks>
+					<TaskPouOids>
+						<TaskPouOid Prio="20" OTCID="#x01010081"/>
+					</TaskPouOids>
+				</Instance>
+			</Project>
 		</Plc>
 		<Io>
-			<Device Disabled="true" DevType="111" DevFlags="#x0003" AmsPort="28674" Id="2">
+			<Device DevType="111" DevFlags="#x0003" AmsPort="28674" Id="2">
 				<Name>Gerät 2 (EtherCAT)</Name>
 				<AddressInfo>
 					<Pnp>
@@ -562,7 +651,7 @@
 				<Image Id="1" AddrType="9" ImageType="3">
 					<Name>Prozessabbild</Name>
 				</Image>
-				<Box Disabled="true" BoxType="9081" AmsPort="28928" Id="1">
+				<Box BoxType="9081" AmsPort="28928" Id="1">
 					<Name>Box 1 (BK1150)</Name>
 					<ImageId>1000</ImageId>
 					<Vars VarGrpType="1">
@@ -1249,31 +1338,11 @@
 		</Io>
 	</Project>
 	<Mappings>
-		<OwnerA Name="TIPC^GestionDesModesDeMarche^GestionDesModesDeMarche Instance">
+		<MappingInfo Identifier="{00000000-0081-0101-8000-010110000403}" Id="#x03070010"/>
+		<OwnerA Name="TIPC^AD-DA_V2^AD-DA_V2 Instance">
 			<OwnerB Name="TIID^Device 2 (EtherCAT)^Box 1 (BK1150)">
-				<Link VarA="PlcTask Inputs^GVL.fbAct1.IxSensIn" VarB="Term 6 (KL1408)^Channel 2^Eingang"/>
-				<Link VarA="PlcTask Inputs^GVL.fbAct1.IxSensOut" VarB="Term 6 (KL1408)^Channel 1^Eingang"/>
-				<Link VarA="PlcTask Inputs^GVL.fbAct1.xReset" VarB="Term 6 (KL1408)^Channel 8^Eingang"/>
-				<Link VarA="PlcTask Inputs^GVL.fbAct2.IxSensIn" VarB="Term 6 (KL1408)^Channel 4^Eingang"/>
-				<Link VarA="PlcTask Inputs^GVL.fbAct2.IxSensOut" VarB="Term 6 (KL1408)^Channel 3^Eingang"/>
-				<Link VarA="PlcTask Inputs^GVL.fbAct2.xReset" VarB="Term 6 (KL1408)^Channel 8^Eingang"/>
-				<Link VarA="PlcTask Inputs^GVL.fbAct3.IxSensOut" VarB="Term 6 (KL1408)^Channel 5^Eingang"/>
-				<Link VarA="PlcTask Inputs^GVL.fbAct3.xReset" VarB="Term 6 (KL1408)^Channel 8^Eingang"/>
-				<Link VarA="PlcTask Inputs^GVL.stIO.stIn.IxAruIO" VarB="Term 7 (KL1408)^Channel 1^Eingang"/>
-				<Link VarA="PlcTask Inputs^GVL.stIO.stIn.xAuto" VarB="Term 7 (KL1408)^Channel 3^Eingang"/>
-				<Link VarA="PlcTask Inputs^GVL.stIO.stIn.xManual" VarB="Term 7 (KL1408)^Channel 2^Eingang"/>
-				<Link VarA="PlcTask Inputs^GVL.stIO.stIn.xResetIO" VarB="Term 6 (KL1408)^Channel 8^Eingang"/>
-				<Link VarA="PlcTask Inputs^GVL.stIO.stIn.xStartIO" VarB="Term 6 (KL1408)^Channel 6^Eingang"/>
-				<Link VarA="PlcTask Inputs^GVL.stIO.stIn.xStopIO" VarB="Term 6 (KL1408)^Channel 7^Eingang"/>
-				<Link VarA="PlcTask Outputs^GVL.fbAct1.QxInOutput" VarB="Term 8 (KL2408)^Channel 6^Ausgang"/>
-				<Link VarA="PlcTask Outputs^GVL.fbAct1.QxOutOutput" VarB="Term 8 (KL2408)^Channel 5^Ausgang"/>
-				<Link VarA="PlcTask Outputs^GVL.fbAct1.QxVanneDeBloquage" VarB="Term 9 (KL2408)^Channel 2^Ausgang"/>
-				<Link VarA="PlcTask Outputs^GVL.fbAct2.QxInOutput" VarB="Term 8 (KL2408)^Channel 8^Ausgang"/>
-				<Link VarA="PlcTask Outputs^GVL.fbAct2.QxOutOutput" VarB="Term 8 (KL2408)^Channel 7^Ausgang"/>
-				<Link VarA="PlcTask Outputs^GVL.fbAct3.QxOutOutput" VarB="Term 9 (KL2408)^Channel 1^Ausgang"/>
-				<Link VarA="PlcTask Outputs^GVL.stIO.stOut.QxLampeOrange" VarB="Term 8 (KL2408)^Channel 2^Ausgang"/>
-				<Link VarA="PlcTask Outputs^GVL.stIO.stOut.QxLampeRouge" VarB="Term 8 (KL2408)^Channel 1^Ausgang"/>
-				<Link VarA="PlcTask Outputs^GVL.stIO.stOut.QxLampeVerte" VarB="Term 8 (KL2408)^Channel 3^Ausgang"/>
+				<Link VarA="PlcTask Inputs^GVL.fbIa.IaEntree" VarB="Term 4 (KL3404)^Channel 2^Daten Ein"/>
+				<Link VarA="PlcTask Outputs^GVL.fbQa.QaSortie" VarB="Term 5 (KL4434)^Channel 2^Daten Aus"/>
 			</OwnerB>
 		</OwnerA>
 	</Mappings>

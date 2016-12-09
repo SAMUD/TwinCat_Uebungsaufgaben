@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<TcPlcObject Version="1.1.0.1" ProductVersion="3.1.4020.6">
+  <DUT Name="ST_MinMax" Id="{7822ab5a-e746-468d-bd91-2eaa28e24418}">
+    <Declaration><![CDATA[TYPE ST_MinMax :
+STRUCT
+	lrMin: LREAL;
+	lrMax: LREAL;
+END_STRUCT
+END_TYPE
+]]></Declaration>
+  </DUT>
+</TcPlcObject>
